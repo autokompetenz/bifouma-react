@@ -41,7 +41,7 @@ export default function ProjectDetail() {
         <div className="container">
           <div className="row">
             <div className="col-lg-6 mb-4">
-              <ProjectVisual sector={p.sector} title={content.title} size="detail" />
+              <ProjectVisual sector={p.sector} title={content.title} size="detail" image={p.image} />
             </div>
             <div className="col-lg-6">
               <h2 className="section-title">{t('projectDetail.overview')}</h2>

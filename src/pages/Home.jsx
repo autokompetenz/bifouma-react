@@ -108,6 +108,7 @@ export default function Home() {
     <>
       {/* ============ HERO ============ */}
       <section className="hero hero-bif">
+        <div className="hero-bif__bg" aria-hidden="true" />
         <div className="container">
           <div className="hero-inner">
             <div>
@@ -257,7 +258,7 @@ export default function Home() {
               return (
                 <div className="col-md-6 col-lg-4 mb-4" key={p.slug}>
                   <div className="project-card">
-                    <ProjectVisual sector={p.sector} title={content.title} />
+                    <ProjectVisual sector={p.sector} title={content.title} image={p.image} />
                     <div className="card-body d-flex flex-column p-4">
                       <div className="d-flex justify-content-between align-items-center mb-2">
                         <span className="badge badge-primary">{c(sectorLabels[p.sector])}</span>

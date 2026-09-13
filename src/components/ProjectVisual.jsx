@@ -24,12 +24,28 @@ const SECTOR_THEME = {
   },
 };
 
-export default function ProjectVisual({ sector, title = '', size = 'card' }) {
+export default function ProjectVisual({ image, sector, title = '', size = 'card' }) {
   const { lang } = useI18n();
   const theme = SECTOR_THEME[sector] || SECTOR_THEME.energy;
-  const monogram = title.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
-  const label = (sectorLabels[sector] && sectorLabels[sector][lang]) || sectorLabels[sector].de || sector;
+  const label =
+    (sectorLabels[sector] && sectorLabels[sector][lang]) || sectorLabels[sector].de || sector;
 
+  if (image) {
+    return (
+      <div
+        className={`project-visual project-visual--${size} project-visual--photo`}
+        role="img"
+        aria-label={label}
+      >
+        <img src={image} alt={title} loading="lazy" />
+        <div className="project-visual__scrim" aria-hidden="true" />
+        <span className="project-visual__label" style={{ borderColor: theme.accent, color: '#fff' }}>{label}</span>
+        <i className={`${theme.icon} project-visual__icon`} aria-hidden="true" />
+      </div>
+    );
+  }
+
+  const monogram = title.trim().split(/\s+/).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
   return (
     <div className={`project-visual project-visual--${size}`} style={{ background: theme.gradient }} role="img" aria-label={label}>
       <div className="project-visual__grid" aria-hidden="true" />

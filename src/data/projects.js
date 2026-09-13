@@ -159,7 +159,7 @@ export const projects = [
     durationMonths: 60,
     returnRate: 16,
     progress: 40,
-    image: '/assets/images/product/product-1.jpg',
+    image: '/assets/images/product/product-4.jpg',
     content: {
       de: {
         title: 'Wohngebiet Belgrad-Ufer',
@@ -209,7 +209,7 @@ export const projects = [
     durationMonths: 18,
     returnRate: 10,
     progress: 85,
-    image: '/assets/images/product/product-2.jpg',
+    image: '/assets/images/product/product-5.jpg',
     content: {
       de: {
         title: 'Forellenzucht Donau',
@@ -259,7 +259,7 @@ export const projects = [
     durationMonths: 30,
     returnRate: 9,
     progress: 79,
-    image: '/assets/images/product/product-3.jpg',
+    image: '/assets/images/product/product-6.jpg',
     content: {
       de: {
         title: 'Einzelhandel Tampere',

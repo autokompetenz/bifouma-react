@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
-import BrandVisual from '../components/BrandVisual.jsx';
 import AnimatedCounter from '../components/AnimatedCounter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import CoverageStrip from '../components/CoverageStrip.jsx';
@@ -27,7 +26,7 @@ export default function About() {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 mb-4 mb-lg-0">
-              <BrandVisual icon="ti-rocket" />
+              <img className="about-photo" src="/assets/images/about.jpg" alt="" loading="lazy" />
             </div>
             <div className="col-lg-6">
               <h2 className="section-title">{t('about.historyTitle')}</h2>

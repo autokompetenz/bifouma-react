@@ -59,7 +59,7 @@ export default function Projects() {
             return (
               <div className="col-md-6 col-lg-4 mb-5" key={p.slug}>
                 <div className="card project-card h-100">
-                  <ProjectVisual sector={p.sector} title={content.title} />
+                  <ProjectVisual sector={p.sector} title={content.title} image={p.image} />
                   <div className="card-body p-4 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <span className="badge badge-primary">{c(sectorLabels[p.sector])}</span>
