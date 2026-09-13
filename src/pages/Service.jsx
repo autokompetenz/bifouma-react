@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
+import Reveal from '../components/Reveal.jsx';
 
-const iconCycle = ['ti-wallet', 'ti-briefcase', 'ti-layers-alt', 'ti-headphone-alt', 'ti-search', 'ti-time'];
+const ICONS = ['ti-wallet', 'ti-briefcase', 'ti-layers-alt', 'ti-headphone-alt', 'ti-search', 'ti-time'];
 
 export default function Service() {
   const { t } = useI18n();
@@ -9,27 +10,34 @@ export default function Service() {
 
   return (
     <>
-      <section className="section-lg service-bg-image position-relative page-hero">
+      <div className="page-hero-head">
+        <div className="container">
+          <div className="text-center">
+            <h1 className="section-title mb-0">{t('service.title')}</h1>
+            <p className="lead">{t('service.subtitle')}</p>
+          </div>
+        </div>
+      </div>
+
+      <section className="section-lg">
         <div className="container">
           <div className="row">
-            <div className="col-12 text-center">
-              <h2 className="section-title">{t('service.title')}</h2>
-              <p className="mb-4">{t('service.subtitle')}</p>
-            </div>
             {items.map((s, i) => (
-              <div className="col-sm-6 mb-4" key={s.title}>
-                <div className="rounded bg-white p-4 shadow-primary h-100">
-                  <i className={`${iconCycle[i]} round-icon blue mb-4`} />
-                  <h4>{s.title}</h4>
-                  <p>{s.desc}</p>
-                </div>
+              <div className="col-sm-6 col-lg-4 mb-4" key={s.title}>
+                <Reveal as="div" delay={i * 70} className="h-100">
+                  <div className="solution-card">
+                    <i className={`${ICONS[i]} round-icon blue`} aria-hidden="true" />
+                    <h4>{s.title}</h4>
+                    <p>{s.desc}</p>
+                  </div>
+                </Reveal>
               </div>
             ))}
           </div>
-          <div className="row justify-content-center mt-4">
-            <Link to="/loan" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.loan')}</Link>
-            <Link to="/submit" className="btn btn-secondary mb-2 mr-2">{t('misc.submitProject')}</Link>
-            <Link to="/projects" className="btn btn-primary mb-2">{t('misc.invest')}</Link>
+          <div className="text-center mt-4">
+            <Link to="/loan" className="btn btn-primary btn-lg mr-2 mb-2">{t('misc.loan')}</Link>
+            <Link to="/submit" className="btn btn-secondary btn-lg mr-2 mb-2">{t('misc.submitProject')}</Link>
+            <Link to="/projects" className="btn btn-outline-dark btn-lg mb-2">{t('misc.invest')}</Link>
           </div>
         </div>
       </section>

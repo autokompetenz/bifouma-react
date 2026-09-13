@@ -22,21 +22,24 @@ export default function SubmitProject() {
   const fileId = useId('sp-file');
 
   return (
-    <section className="section-lg submit page-hero">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <h1 className="section-title">{t('submit.title')}</h1>
-            <p>{t('submit.subtitle')}</p>
+    <div className="submit page-hero">
+      <div className="page-hero-head">
+        <div className="container">
+          <div className="text-center">
+            <h1 className="section-title mb-0">{t('submit.title')}</h1>
+            <p className="lead">{t('submit.subtitle')}</p>
           </div>
         </div>
+      </div>
+      <section className="section-lg">
+        <div className="container">
 
-        <div className="row justify-content-center mt-5">
+        <div className="row justify-content-center">
           <div className="col-lg-5 order-2 order-lg-1">
             <h2 className="h4">{t('submit.stepsTitle')}</h2>
             <ul className="service-list pl-0 mt-3">
               {t('submit.steps').map((s, i) => (
-                <li key={i}><i className="ti-check text-purple mr-2" />{s}</li>
+                <li key={i}><i className="ti-check mr-2" />{s}</li>
               ))}
             </ul>
             <div className="text-center mt-4">
@@ -47,7 +50,11 @@ export default function SubmitProject() {
           <div className="col-lg-7 order-1 order-lg-2 mb-4">
             <div className="rounded bg-white p-4 shadow-primary">
               {sent ? (
-                <p className="bif-success">{f.success}</p>
+                <div className="bif-success-wrap text-center py-4">
+                  <i className="ti-check-box text-success" style={{ fontSize: 44 }} />
+                  <p className="bif-success mb-0">{f.success}</p>
+                  <button type="button" className="btn btn-outline-dark mt-4" onClick={() => setSent(false)}>{t('loan.newRequest')}</button>
+                </div>
               ) : (
                 <form
                   className="bif-form"
@@ -96,7 +103,7 @@ export default function SubmitProject() {
                       </label>
                     </div>
                     <div className="col-12 text-center">
-                      <button type="submit" className="btn btn-primary primary-shadow btn-lg">{f.submit}</button>
+                      <button type="submit" className="btn btn-primary  btn-lg">{f.submit}</button>
                     </div>
                   </div>
                 </form>
@@ -105,6 +112,7 @@ export default function SubmitProject() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </div>
   );
 }

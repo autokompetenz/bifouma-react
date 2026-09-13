@@ -31,10 +31,10 @@ export default function ProjectVisual({ sector, title = '', size = 'card' }) {
   const label = (sectorLabels[sector] && sectorLabels[sector][lang]) || sectorLabels[sector].de || sector;
 
   return (
-    <div className={`project-visual project-visual--${size}`} style={{ background: theme.gradient }}>
-      <div className="project-visual__grid" />
+    <div className={`project-visual project-visual--${size}`} style={{ background: theme.gradient }} role="img" aria-label={label}>
+      <div className="project-visual__grid" aria-hidden="true" />
       <span className="project-visual__monogram">{monogram || label.slice(0, 2).toUpperCase()}</span>
-      <i className={`${theme.icon} project-visual__icon`} />
+      <i className={`${theme.icon} project-visual__icon`} aria-hidden="true" />
       <span className="project-visual__label" style={{ borderColor: theme.accent, color: theme.accent }}>{label}</span>
     </div>
   );

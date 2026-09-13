@@ -70,19 +70,21 @@ export default function Loan() {
 
   return (
     <section className="section-lg loan page-hero">
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-12 text-center">
-            <h2 className="section-title">{t('loan.title')}</h2>
-            <p>{t('loan.subtitle')}</p>
+      <div className="page-hero-head">
+        <div className="container">
+          <div className="text-center">
+            <h1 className="section-title mb-0">{t('loan.title')}</h1>
+            <p className="lead">{t('loan.subtitle')}</p>
           </div>
         </div>
+      </div>
+      <div className="container mt-5">
 
         {sent ? (
           <div className="row justify-content-center mt-5">
             <div className="col-lg-8 text-center">
               <div className="rounded bg-white p-5 shadow-primary">
-                <i className="ti-check-box text-color" style={{ fontSize: 48 }} />
+                <i className="ti-check-box" style={{ fontSize: 48, color: 'var(--bf-teal)' }} />
                 <h3 className="mt-3 mb-2">{t('loan.form.success')}</h3>
                 <button
                   type="button"
@@ -125,7 +127,7 @@ export default function Loan() {
                 <h4>{t('loan.terms')}</h4>
                 <ul className="service-list pl-0 mt-3">
                   {t('loan.termsList').map((s, i) => (
-                    <li key={i}><i className="ti-check text-purple mr-2" />{s}</li>
+                    <li key={i}><i className="ti-check mr-2" />{s}</li>
                   ))}
                 </ul>
                 <div className="rounded bg-white p-4 shadow-primary mt-4">
@@ -156,7 +158,7 @@ export default function Loan() {
                           {errors.purpose && <p className="form-error">{errors.purpose}</p>}
                         </div>
                         <div className="col-12 text-right">
-                          <button type="submit" className="btn btn-primary primary-shadow">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
@@ -177,7 +179,7 @@ export default function Loan() {
                           <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
                         </div>
                         <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary primary-shadow">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
@@ -207,7 +209,7 @@ export default function Loan() {
                           <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
                         </div>
                         <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary primary-shadow">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
@@ -243,7 +245,7 @@ export default function Loan() {
                       </label>
                       <div className="d-flex justify-content-between mt-3">
                         <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
-                        <button type="submit" className="btn btn-primary primary-shadow btn-lg" disabled={!form.consent}>
+                        <button type="submit" className="btn btn-primary  btn-lg" disabled={!form.consent}>
                           <i className="ti-check mr-2" />{t('loan.confirm')}
                         </button>
                       </div>

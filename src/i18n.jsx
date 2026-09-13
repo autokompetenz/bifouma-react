@@ -43,7 +43,7 @@ const translations = {
       contact: 'Kontakt',
       submitProject: 'Projekt einreichen',
       loan: 'Kreditanfrage',
-      tryFree: 'Finanzierung anfragen',
+      cta: 'Finanzierung anfragen',
       menu: 'Menü',
       comment: 'So funktioniert es',
     },
@@ -53,7 +53,7 @@ const translations = {
       subtitle:
         'Kredite und Finanzierungslösungen, die zu Ihrem Bedarf passen — mit persönlicher Begleitung in jeder Phase Ihres Projekts.',
       explore: 'Unsere Lösungen entdecken',
-      tryFree: 'Finanzierung anfragen',
+      cta: 'Finanzierung anfragen',
       trust: 'Bearbeitung innerhalb von 72 Stunden · Unverbindlich · Begleitung in 3 Sprachen',
     },
     features: {
@@ -148,6 +148,7 @@ const translations = {
       target: 'Zielbetrag',
       expected: 'Erwartete Rendite',
       duration: 'Laufzeit',
+      months: 'Monate',
       view: 'Projekt ansehen',
       submit: 'Eigenes Projekt einreichen',
       ctaTitle: 'Ihr Projekt braucht eine Finanzierung?',
@@ -259,7 +260,7 @@ const translations = {
       contactTitle: 'Kontakt',
     },
     notFound: { title: 'Seite nicht gefunden', back: 'Zur Startseite' },
-    misc: { submitProject: 'Projekt einreichen', loan: 'Kreditanfrage', services: 'Unsere Leistungen', invest: 'Finanzierung' },
+    misc: { submitProject: 'Projekt einreichen', loan: 'Kreditanfrage', services: 'Unsere Leistungen', invest: 'Finanzierung', allProjects: 'Alle Projekte ansehen', more: 'Mehr erfahren' },
     legal: {
       imprint: {
         title: 'Impressum',
@@ -339,7 +340,7 @@ const translations = {
       contact: 'Yhteystiedot',
       submitProject: 'Lähetä projekti',
       loan: 'Lainahakemus',
-      tryFree: 'Hae rahoitusta',
+      cta: 'Hae rahoitusta',
       menu: 'Valikko',
       comment: 'Näin se toimii',
     },
@@ -349,7 +350,7 @@ const translations = {
       subtitle:
         'Laina- ja rahoitusratkaisuja, jotka sopivat tarpeisiisi — henkilökohtaisella tukevalla jokaisessa projektisi vaiheessa.',
       explore: 'Tutustu ratkaisuihimme',
-      tryFree: 'Hae rahoitusta',
+      cta: 'Hae rahoitusta',
       trust: 'Käsittely 72 tunnin kuluessa · Sitoumuksetonta · Tuki kolmella kielellä',
     },
     features: {
@@ -444,6 +445,7 @@ const translations = {
       target: 'Tavoitesumma',
       expected: 'Odotettu tuotto',
       duration: 'Kesto',
+      months: 'kuukautta',
       view: 'Näytä projekti',
       submit: 'Lähetä oma projekti',
       ctaTitle: 'Tarvitseeko projektisi rahoitusta?',
@@ -555,7 +557,7 @@ const translations = {
       contactTitle: 'Yhteystiedot',
     },
     notFound: { title: 'Sivua ei löytynyt', back: 'Takaisin etusivulle' },
-    misc: { submitProject: 'Lähetä projekti', loan: 'Lainahakemus', services: 'Palvelumme', invest: 'Rahoitus' },
+    misc: { submitProject: 'Lähetä projekti', loan: 'Lainahakemus', services: 'Palvelumme', invest: 'Rahoitus', allProjects: 'Katso kaikki projektit', more: 'Lue lisää' },
     legal: {
       imprint: {
         title: 'Yritystiedot',
@@ -635,7 +637,7 @@ const translations = {
       contact: 'Контакт',
       submitProject: 'Поднеси пројекат',
       loan: 'Захтев за кредит',
-      tryFree: 'Затражи финансирање',
+      cta: 'Затражи финансирање',
       menu: 'Мени',
       comment: 'Како функционише',
     },
@@ -645,7 +647,7 @@ const translations = {
       subtitle:
         'Кредитна и финансијска решења која одговарају вашим потребама — са пратњом у свакој фази вашег пројекта.',
       explore: 'Погледај наша решења',
-      tryFree: 'Затражи финансирање',
+      cta: 'Затражи финансирање',
       trust: 'Обрада у року од 72 сата · Без обавеза · Пратња на 3 језика',
     },
     features: {
@@ -740,6 +742,7 @@ const translations = {
       target: 'Циљани износ',
       expected: 'Очекивани принос',
       duration: 'Трајање',
+      months: 'месеци',
       view: 'Погледај пројекат',
       submit: 'Поднеси сопствени пројекат',
       ctaTitle: 'Вашем пројекту је потребно финансирање?',
@@ -851,7 +854,7 @@ const translations = {
       contactTitle: 'Контакт',
     },
     notFound: { title: 'Страница није пронађена', back: 'Назад на почетну' },
-    misc: { submitProject: 'Поднеси пројекат', loan: 'Захтев за кредит', services: 'Наше услуге', invest: 'Финансирање' },
+    misc: { submitProject: 'Поднеси пројекат', loan: 'Захтев за кредит', services: 'Наше услуге', invest: 'Финансирање', allProjects: 'Погледај све пројекте', more: 'Сазнајте више' },
     legal: {
       imprint: {
         title: 'Импресум',
@@ -931,7 +934,7 @@ const translations = {
       contact: 'Contact',
       submitProject: 'Proposer un projet',
       loan: 'Demande de prêt',
-      tryFree: 'Demander un financement',
+      cta: 'Demander un financement',
       menu: 'Menu',
       comment: 'Comment ça marche',
     },
@@ -941,7 +944,7 @@ const translations = {
       subtitle:
         'Des solutions de prêt et de financement adaptées à vos besoins, avec un accompagnement à chaque étape de votre projet.',
       explore: 'Découvrir nos solutions',
-      tryFree: 'Demander un financement',
+      cta: 'Demander un financement',
       trust: 'Traitement sous 72 h · Sans engagement · Accompagnement en 3 langues',
     },
     features: {
@@ -1036,6 +1039,7 @@ const translations = {
       target: 'Montant cible',
       expected: 'Rendement attendu',
       duration: 'Durée',
+      months: 'mois',
       view: 'Voir le projet',
       submit: 'Proposer votre projet',
       ctaTitle: 'Votre projet a besoin d\'un financement ?',
@@ -1147,7 +1151,7 @@ const translations = {
       contactTitle: 'Contact',
     },
     notFound: { title: 'Page introuvable', back: 'Retour à l\'accueil' },
-    misc: { submitProject: 'Proposer un projet', loan: 'Demande de prêt', services: 'Nos services', invest: 'Financement' },
+    misc: { submitProject: 'Proposer un projet', loan: 'Demande de prêt', services: 'Nos services', invest: 'Financement', allProjects: 'Voir tous les projets', more: 'En savoir plus' },
     legal: {
       imprint: {
         title: 'Mentions légales',

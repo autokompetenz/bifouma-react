@@ -41,8 +41,7 @@ function renderRoute(route) {
   return markup;
 }
 
-function buildPage(route, title) {
-  const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+function buildPage(route, title, template) {
   const html = renderRoute(route);
   const canonical = route === '/' ? '/' : route;
   return template
@@ -59,8 +58,8 @@ function buildPage(route, title) {
     );
 }
 
-function writePage(route, outPath, title) {
-  const page = buildPage(route, title);
+function writePage(route, outPath, title, template) {
+  const page = buildPage(route, title, template);
   fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, page);
   console.log(`prerendered ${route} -> ${path.relative(ROOT, outPath)}`);
@@ -72,15 +71,21 @@ function main() {
     process.exit(1);
   }
 
+  const template = fs.readFileSync(path.join(DIST, 'index.html'), 'utf8');
+  if (!template.includes('id="root"></div>')) {
+    console.error('dist/index.html is not a pristine template (missing empty #root).');
+    process.exit(1);
+  }
+
   for (const route of routes) {
     const out = route === '/' ? path.join(DIST, 'index.html') : path.join(DIST, route.replace(/^\//, ''), 'index.html');
-    writePage(route, out, TITLES[route]);
+    writePage(route, out, TITLES[route], template);
   }
 
   for (const p of projects) {
     const content = p.content.fr || p.content.de;
     const title = `Financement — ${content.title} — BIFAUMA`;
-    writePage(`/projects/${p.slug}`, path.join(DIST, 'projects', p.slug, 'index.html'), title);
+    writePage(`/projects/${p.slug}`, path.join(DIST, 'projects', p.slug, 'index.html'), title, template);
   }
 
   console.log('Prerender done.');

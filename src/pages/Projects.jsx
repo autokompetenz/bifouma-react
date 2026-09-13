@@ -9,7 +9,7 @@ export default function Projects() {
   const [sector, setSector] = useState('all');
   const [country, setCountry] = useState('all');
 
-  const c = (obj) => obj[lang] || obj.de;
+  const c = (obj) => obj[lang] || obj.fr;
 
   const list = projects.filter((p) => {
     const okSector = sector === 'all' || p.sector === sector;
@@ -21,12 +21,17 @@ export default function Projects() {
   const countries = ['all', ...new Set(projects.map((p) => p.country))];
 
   return (
-    <section className="section-lg projects page-hero">
-      <div className="container">
-        <div className="col-lg-12 text-center">
-          <h1 className="section-title">{t('projects.title')}</h1>
-          <p className="mb-5">{t('projects.subtitle')}</p>
+    <div className="projects page-hero">
+      <div className="page-hero-head">
+        <div className="container">
+          <div className="text-center">
+            <h1 className="section-title mb-0">{t('projects.title')}</h1>
+            <p className="lead">{t('projects.subtitle')}</p>
+          </div>
         </div>
+      </div>
+      <section className="section-lg">
+        <div className="container">
 
         <div className="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4" style={{ gap: 10 }}>
           <div>
@@ -57,14 +62,14 @@ export default function Projects() {
                   <ProjectVisual sector={p.sector} title={content.title} />
                   <div className="card-body p-4 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                      <span className="badge badge-primary" style={{ background: '#008dec' }}>{c(sectorLabels[p.sector])}</span>
-                      <span className="badge" style={{ background: '#eef2ff', color: '#4d546f' }}>
+                      <span className="badge badge-primary">{c(sectorLabels[p.sector])}</span>
+                      <span className="badge" style={{ background: '#EEF2F8', color: 'var(--bf-muted)' }}>
                         <i className="ti-pin mr-1" />{c(countryLabels[p.country])}
                       </span>
                     </div>
                     <h3 className="h5 mb-1">{content.title}</h3>
                     <p className="mb-3">{content.intro}</p>
-                    <Link to={`/projects/${p.slug}`} className="btn btn-primary primary-shadow w-100 mt-auto">{t('projects.view')}</Link>
+                    <Link to={`/projects/${p.slug}`} className="btn btn-primary w-100 mt-auto">{t('projects.view')}</Link>
                   </div>
                 </div>
               </div>
@@ -80,6 +85,7 @@ export default function Projects() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </div>
   );
 }

@@ -7,7 +7,7 @@ export default function CoverageStrip() {
     <div className="coverage-strip">
       {['de', 'fi', 'sr'].map((c) => (
         <span className="coverage-pill" key={c}>
-          <i className="ti-location-pin" />
+          <i className="ti-location-pin" aria-hidden="true" />
           {countryLabels[c][lang] || countryLabels[c].de}
         </span>
       ))}

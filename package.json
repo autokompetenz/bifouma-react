@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && vite build --ssr src/prerender-entry.jsx --outDir dist-ssr --emptyOutDir && node dist-ssr/prerender-entry.js",
+    "build:app": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

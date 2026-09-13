@@ -11,53 +11,19 @@ export default function About() {
   const stats = t('about.stats');
   const certs = t('about.certs');
 
-  const counterMap = {
-    '72 h': { end: 72, suffix: ' h' },
-    '0 €': { end: 0, suffix: ' €' },
-    '3': { end: 3, prefix: '' },
-  };
-
   return (
-    <>
-      {/* about us */}
-      <section className="section-lg about pb-0 page-hero">
+    <div className="about page-hero">
+      <div className="page-hero-head">
         <div className="container">
-          <div className="row">
-            <div className="col-lg-12">
-              <h2 className="section-title">{t('about.title')}</h2>
-            </div>
-            <div className="col-lg-12 mb-5">
-              <p>{t('about.p1')}</p>
-              <p>{t('about.p2')}</p>
-              <div className="d-flex flex-wrap mt-4">
-                <Link to="/loan" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.loan')}</Link>
-                <Link to="/submit" className="btn btn-secondary mr-2 mb-2">{t('misc.submitProject')}</Link>
-                <Link to="/service" className="btn btn-outline-dark mb-2">{t('misc.services')}</Link>
-              </div>
-            </div>
-            <div className="col-lg-12 mb-4">
-              <h3 className="section-title text-center">{t('about.statsTitle')}</h3>
-              <div className="stat-grid">
-                {stats.map((s) => (
-                  <div className="stat-cell" key={s.label}>
-                    <div className="stat-value">
-                      {counterMap[s.value] ? (
-                        <AnimatedCounter end={counterMap[s.value].end} suffix={counterMap[s.value].suffix} />
-                      ) : (
-                        s.value
-                      )}
-                    </div>
-                    <div className="stat-label">{s.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="text-center">
+            <h1 className="section-title mb-0">{t('about.title')}</h1>
+            <p className="lead">{t('about.p1')}</p>
           </div>
         </div>
-      </section>
+      </div>
 
-      {/* history */}
-      <section className="section">
+      {/* Histoire */}
+      <section className="section-lg">
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 mb-4 mb-lg-0">
@@ -66,32 +32,38 @@ export default function About() {
             <div className="col-lg-6">
               <h2 className="section-title">{t('about.historyTitle')}</h2>
               <p>{t('about.history')}</p>
-              <Link to="/projects" className="btn btn-primary primary-shadow">{t('hero.explore')}</Link>
+              <Link to="/projects" className="btn btn-primary">{t('hero.explore')}</Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* services */}
-      <section className="section product">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-12 text-center">
-              <h2 className="section-title">{t('about.productTitle')}</h2>
-              <p className="mb-4">{t('service.subtitle')}</p>
-            </div>
-            {serviceItems.map((s, i) => (
-              <Reveal as="div" className="col-md-5 col-sm-6 m-2 shadow-primary rounded p-4" key={s.title} delay={i * 80} style={{ background: '#fff' }}>
-                <i className="ti-layers-alt round-icon blue mb-3" />
-                <h4>{s.title}</h4>
-                <p className="mb-0">{s.desc}</p>
-              </Reveal>
-            ))}
+      {/* Chiffres clés */}
+      <section className="section" style={{ borderTop: '1px solid var(--bf-line)', borderBottom: '1px solid var(--bf-line)' }}>
+        <div className="container text-center">
+          <h2 className="section-title mb-4">{t('about.statsTitle')}</h2>
+          <div className="stat-grid">
+            {stats.map((s) => {
+              const m = /^(\d+)(.*)$/.exec(s.value);
+              const animatable = m && m[1] !== '0' && !s.value.includes('/');
+              return (
+                <div className="stat-cell" key={s.label}>
+                  <div className="stat-value">
+                    {animatable ? (
+                      <AnimatedCounter end={Number(m[1])} suffix={m[2].trim() ? ` ${m[2].trim()}` : ''} />
+                    ) : (
+                      s.value
+                    )}
+                  </div>
+                  <div className="stat-label">{s.label}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* vision + standards */}
+      {/* Vision + engagements */}
       <section className="section">
         <div className="container">
           <div className="row">
@@ -103,7 +75,7 @@ export default function About() {
               <h2 className="section-title">{t('about.certTitle')}</h2>
               <ul className="service-list pl-0">
                 {certs.map((c, i) => (
-                  <li key={i}><i className="ti-shield text-purple mr-2" />{c}</li>
+                  <li key={i}><i className="ti-shield mr-2" />{c}</li>
                 ))}
               </ul>
             </Reveal>
@@ -111,15 +83,39 @@ export default function About() {
         </div>
       </section>
 
-      {/* coverage */}
-      <section className="section">
+      {/* Services */}
+      <section className="section" style={{ borderTop: '1px solid var(--bf-line)' }}>
         <div className="container">
-          <div className="col-lg-12 text-center">
-            <h2 className="section-title">{t('about.clients')}</h2>
-            <CoverageStrip />
+          <h2 className="section-title text-center mb-4">{t('about.productTitle')}</h2>
+          <p className="text-center mb-5 mx-auto" style={{ maxWidth: 640 }}>{t('service.subtitle')}</p>
+          <div className="row">
+            {serviceItems.map((s, i) => (
+              <div className="col-sm-6 col-lg-3 mb-4" key={s.title}>
+                <Reveal as="div" delay={i * 70} className="h-100">
+                  <div className="solution-card">
+                    <i className="ti-layers-alt round-icon blue" aria-hidden="true" />
+                    <h4>{s.title}</h4>
+                    <p>{s.desc}</p>
+                  </div>
+                </Reveal>
+              </div>
+            ))}
+          </div>
+          <div className="d-flex flex-wrap justify-content-center mt-3">
+            <Link to="/loan" className="btn btn-primary mr-2 mb-2">{t('misc.loan')}</Link>
+            <Link to="/submit" className="btn btn-secondary mr-2 mb-2">{t('misc.submitProject')}</Link>
+            <Link to="/service" className="btn btn-outline-dark mb-2">{t('misc.services')}</Link>
           </div>
         </div>
       </section>
-    </>
+
+      {/* Couverture */}
+      <section className="section">
+        <div className="container text-center">
+          <h2 className="section-title mb-4">{t('about.clients')}</h2>
+          <CoverageStrip />
+        </div>
+      </section>
+    </div>
   );
 }
