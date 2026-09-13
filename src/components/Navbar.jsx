@@ -30,36 +30,36 @@ export default function Navbar() {
 
   const links = [
     { to: '/', label: t('nav.home'), end: true },
-    { to: '/#feature', label: t('nav.features') },
+    { to: '/#solutions', label: t('nav.features'), end: true },
     { to: '/about', label: t('nav.about') },
     { to: '/service', label: t('nav.service') },
     { to: '/projects', label: t('nav.projects') },
-    { to: '/#team', label: t('nav.team') },
-    { to: '/#pricing', label: t('nav.pricing') },
     { to: '/loan', label: t('nav.loan') },
     { to: '/submit', label: t('nav.submitProject') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
   return (
-    <section className={`fixed-top navigation ${scrolled ? 'nav-bg' : ''} ${hidden ? 'nav-hidden' : ''}`}>
+    <header className={`fixed-top navigation ${scrolled ? 'nav-bg' : ''} ${hidden ? 'nav-hidden' : ''}`}>
       <div className="container">
-        <nav className="navbar navbar-expand-lg navbar-light px-0">
+        <nav className="navbar navbar-expand-lg navbar-light px-0" aria-label={t('nav.menu')}>
           <Link className="navbar-brand" to="/" onClick={close}>
-            <img src="/assets/images/logo.png" alt="BIFAUMA logo" style={{ height: 36 }} />
+            <img src="/assets/images/logo.png" alt="BIFAUMA" style={{ height: 36 }} />
           </Link>
           <div className="d-flex align-items-center order-lg-3 ml-auto ml-lg-3">
             <LanguageSwitcher compact />
             <button
               className="navbar-toggler border-0 ml-2"
               type="button"
-              aria-label="Toggle navigation"
+              aria-label={open ? 'Close menu' : t('nav.menu')}
+              aria-expanded={open}
+              aria-controls="bifMenu"
               onClick={() => setOpen((o) => !o)}
             >
-              <span className="navbar-toggler-icon" />
+              <span className="bif-hamburger" aria-hidden="true" />
             </button>
           </div>
-          <div className={`collapse navbar-collapse text-center ${open ? 'show' : ''}`}>
+          <div id="bifMenu" className={`collapse navbar-collapse text-center ${open ? 'show' : ''}`}>
             <ul className="navbar-nav ml-auto">
               {links.map((l) =>
                 l.to.includes('#') ? (
@@ -78,13 +78,13 @@ export default function Navbar() {
               )}
             </ul>
             <div className="d-flex align-items-center justify-content-center flex-wrap ml-lg-3">
-              <Link className="btn btn-primary primary-shadow my-2" onClick={close} to="/projects">
+              <Link className="btn btn-primary primary-shadow my-2" onClick={close} to="/loan">
                 {t('nav.tryFree')}
               </Link>
             </div>
           </div>
         </nav>
       </div>
-    </section>
+    </header>
   );
 }

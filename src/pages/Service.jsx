@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 
-const iconCycle = ['ti-layers-alt', 'ti-pencil-alt', 'ti-headphone-alt', 'ti-wallet', 'ti-stats-up', 'ti-file'];
+const iconCycle = ['ti-wallet', 'ti-briefcase', 'ti-layers-alt', 'ti-headphone-alt', 'ti-search', 'ti-time'];
 
 export default function Service() {
   const { t } = useI18n();

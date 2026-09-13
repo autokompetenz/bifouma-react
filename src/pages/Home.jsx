@@ -1,69 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import Reveal from '../components/Reveal.jsx';
 import AnimatedCounter from '../components/AnimatedCounter.jsx';
 import BrandVisual from '../components/BrandVisual.jsx';
 import CoverageStrip from '../components/CoverageStrip.jsx';
-
-function TeamSlider() {
-  const { t } = useI18n();
-  const [index, setIndex] = useState(0);
-  const [limit, setLimit] = useState(1);
-
-  const measure = () => {
-    const track = document.querySelector('.team-slider');
-    if (!track) return;
-    const vw = track.clientWidth;
-    const item = 320 + 24;
-    const n = Math.max(1, Math.floor(vw / item));
-    setLimit((document.querySelectorAll('.team-slider .team-member').length || 0) - n);
-  };
-
-  useEffect(() => {
-    measure();
-    window.addEventListener('resize', measure);
-    return () => window.removeEventListener('resize', measure);
-  }, []);
-
-  const scrollTo = (i) => {
-    const track = document.querySelector('.team-slider');
-    if (track) track.scrollTo({ left: i * (320 + 24), behavior: 'smooth' });
-    setIndex(i);
-  };
-
-  return (
-    <div className="team-slider-wrap">
-      <button type="button" className="team-arrow prev" aria-label="Previous" onClick={() => scrollTo(Math.max(0, index - 1))}>
-        <i className="ti-arrow-left" />
-      </button>
-      <div className="team-slider">
-        {t('team.members').map((m) => (
-          <div className="team-member" key={m.name}>
-            <div className="d-flex mb-3">
-              <div className="mr-3">
-                <span
-                  className="d-flex align-items-center justify-content-center rounded-circle text-white font-weight-bold"
-                  style={{ width: 64, height: 64, background: 'linear-gradient(25deg,#17ffd3,#008dec)' }}
-                >
-                  {m.name.split(' ').map((p) => p[0]).join('')}
-                </span>
-              </div>
-              <div className="align-self-center">
-                <h4 className="mb-0">{m.name}</h4>
-                <h6 className="text-color mb-0">{m.role}</h6>
-              </div>
-            </div>
-            <p>{t('team.bio')}</p>
-          </div>
-        ))}
-      </div>
-      <button type="button" className="team-arrow next" aria-label="Next" onClick={() => scrollTo(Math.min(limit, index + 1))}>
-        <i className="ti-arrow-right" />
-      </button>
-    </div>
-  );
-}
 
 function Newsletter() {
   const { t } = useI18n();
@@ -105,8 +46,8 @@ export default function Home() {
   const stats = t('home.stats');
 
   const counterMap = {
-    '€850K+': { end: 850, prefix: '€', suffix: 'K+' },
-    '26': { end: 26 },
+    '72 h': { end: 72, suffix: ' h' },
+    '0 €': { end: 0, suffix: ' €' },
     '3': { end: 3 },
   };
 
@@ -130,8 +71,8 @@ export default function Home() {
               </h1>
               <p className="mb-4">{t('hero.subtitle')}</p>
               <div className="mb-4">
-                <Link to="/projects" className="btn btn-secondary btn-lg mr-2">{t('hero.explore')}</Link>
-                <Link to="/submit" className="btn btn-primary btn-lg primary-shadow">{t('hero.tryFree')}</Link>
+                <Link to="/loan" className="btn btn-primary btn-lg primary-shadow mr-2">{t('hero.tryFree')}</Link>
+                <Link to="/service" className="btn btn-secondary btn-lg">{t('hero.explore')}</Link>
               </div>
             </div>
           </div>
@@ -205,7 +146,7 @@ export default function Home() {
       </section>
 
       {/* feature */}
-      <section className="section feature mb-0" id="feature">
+      <section className="section feature mb-0" id="solutions">
         <div className="container">
           <div className="row">
             <div className="col-lg-12 text-center">
@@ -239,7 +180,7 @@ export default function Home() {
             <Reveal as="div" className="col-md-5" delay={150}>
               <h2 className="section-title">{t('how.title')}</h2>
               <p>{t('how.desc')}</p>
-              <Link to="/projects" className="btn btn-primary primary-shadow mt-3">{t('hero.explore')}</Link>
+              <Link to="/loan" className="btn btn-primary primary-shadow mt-3">{t('misc.loan')}</Link>
             </Reveal>
           </div>
         </div>
@@ -253,7 +194,7 @@ export default function Home() {
               <h2 className="section-title">{t('trust.title')}</h2>
               <p className="mb-4">{t('trust.desc')}</p>
               <div className="d-flex flex-wrap mt-4">
-                <Link to="/projects" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.invest')}</Link>
+                <Link to="/service" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.services')}</Link>
                 <Link to="/loan" className="btn btn-secondary mr-2 mb-2">{t('misc.loan')}</Link>
                 <Link to="/submit" className="btn btn-outline-dark mb-2">{t('misc.submitProject')}</Link>
               </div>
@@ -261,50 +202,6 @@ export default function Home() {
             <Reveal as="div" className="col-md-7 order-1 order-md-2" delay={150}>
               <BrandVisual icon="ti-shield" items={t('trust.list')} size="lg" />
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* team */}
-      <section className="section-lg team" id="team">
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <Reveal>
-                <h2 className="section-title">{t('team.title')}</h2>
-                <p className="mb-4">{t('team.subtitle')}</p>
-              </Reveal>
-            </div>
-          </div>
-          <Reveal delay={120} className="col-11 mx-auto">
-            <TeamSlider />
-          </Reveal>
-        </div>
-      </section>
-
-      {/* pricing */}
-      <section className="section-lg pb-0 pricing" id="pricing">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center">
-              <Reveal>
-                <h2 className="section-title">{t('pricing.title')}</h2>
-                <p className="mb-50">{t('pricing.subtitle')}</p>
-              </Reveal>
-            </div>
-            <div className="col-lg-10 mx-auto">
-              <div className="row justify-content-center">
-                {t('pricing.cards').map((card, i) => (
-                  <Reveal as="div" className="col-md-6 col-lg-4 mb-5 mb-lg-0" key={card.title} delay={i * 120}>
-                    <div className={`rounded text-center pricing-table table-${i + 1}`}>
-                      <h3>{card.title}</h3>
-                      <p>{card.desc}</p>
-                      <Link to={card.to} className="btn pricing-btn px-3">{card.btn}</Link>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </section>

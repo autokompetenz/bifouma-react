@@ -1,0 +1,796 @@
+Tu es un développeur frontend senior spécialisé en React, responsive design, UX/UI, accessibilité et optimisation des interfaces web.
+
+Tu dois auditer, corriger et améliorer le site BIFAUMA existant.
+
+URL de référence :
+https://bifouma-react.vercel.app/
+
+IMPORTANT :
+Ne reconstruis pas inutilement le projet depuis zéro.
+Travaille à partir du code existant.
+Conserve les fonctionnalités déjà présentes lorsqu'elles sont correctes.
+Corrige uniquement ce qui doit l'être et améliore la qualité générale du produit.
+
+==================================================
+
+1. CONTEXTE DE BIFAUMA
+==================================================
+
+BIFAUMA est une entreprise spécialisée dans :
+
+* l'octroi de prêts ;
+* les solutions de financement ;
+* l'accompagnement des particuliers et/ou entreprises dans leurs besoins de financement ;
+* l'accompagnement des projets nécessitant un financement.
+
+Le site doit donc présenter BIFAUMA comme une entreprise de financement et de prêt sérieuse, professionnelle, accessible et rassurante.
+
+NE PAS présenter BIFAUMA comme :
+
+* une banque traditionnelle si ce n'est pas juridiquement le cas ;
+* une société d'investissement si ce n'est pas son activité ;
+* une plateforme de trading ;
+* une société de gestion d'actifs ;
+* un intermédiaire financier avec des services qui n'existent pas réellement.
+
+Le vocabulaire du site doit rester cohérent avec les activités réelles de BIFAUMA.
+
+Le message principal doit être orienté vers :
+
+* le financement ;
+* les prêts ;
+* les projets ;
+* l'accompagnement ;
+* la simplicité de la demande ;
+* la confiance.
+
+==================================================
+2. OBJECTIF GLOBAL
+==================
+
+Améliorer le site afin qu'il soit :
+
+* professionnel ;
+* moderne ;
+* crédible ;
+* rassurant ;
+* simple à comprendre ;
+* agréable à utiliser ;
+* parfaitement responsive ;
+* rapide ;
+* accessible ;
+* orienté conversion.
+
+Le visiteur doit comprendre en quelques secondes :
+
+1. Qui est BIFAUMA ?
+2. Ce que BIFAUMA propose.
+3. Comment BIFAUMA peut l'aider.
+4. Comment faire une demande.
+5. Comment contacter BIFAUMA.
+
+L'objectif principal du site est de pousser l'utilisateur à effectuer une action :
+
+"Demander un prêt"
+ou
+"Demander un financement"
+
+Utilise le CTA qui correspond le mieux au contenu réel du projet.
+
+==================================================
+3. RESPONSIVE DESIGN — PRIORITÉ ABSOLUE
+=======================================
+
+Le site doit être parfaitement responsive sur :
+
+* mobile : 320px à 767px ;
+* tablette : 768px à 1023px ;
+* desktop : 1024px à 1439px ;
+* grands écrans : 1440px et plus.
+
+Ne fais pas simplement une version desktop réduite sur mobile.
+
+Le design doit être pensé pour chaque format.
+
+Tester notamment :
+
+* 320px ;
+* 360px ;
+* 375px ;
+* 390px ;
+* 414px ;
+* 768px ;
+* 1024px ;
+* 1280px ;
+* 1440px ;
+* 1920px.
+
+==================================================
+4. CORRECTIONS MOBILE
+=====================
+
+Sur mobile :
+
+* aucun élément ne doit dépasser horizontalement de l'écran ;
+* aucun scroll horizontal ne doit apparaître ;
+* les textes doivent être parfaitement lisibles ;
+* les titres ne doivent pas être coupés ;
+* les boutons doivent être suffisamment grands pour être facilement touchés ;
+* les marges latérales doivent être cohérentes ;
+* les sections doivent avoir une hauteur naturelle ;
+* les images doivent rester proportionnées ;
+* les cartes doivent s'empiler correctement ;
+* les formulaires doivent être parfaitement utilisables ;
+* les champs doivent avoir une hauteur confortable ;
+* les boutons doivent être suffisamment espacés ;
+* les éléments décoratifs ne doivent pas casser la mise en page.
+
+Évite les valeurs fixes qui provoquent des débordements.
+
+Utilise lorsque nécessaire :
+
+* max-width ;
+* width: 100% ;
+* min-width: 0 ;
+* flex-wrap ;
+* CSS Grid responsive ;
+* clamp() pour les tailles de texte ;
+* media queries appropriées.
+
+==================================================
+5. HEADER / NAVIGATION
+======================
+
+Le header doit être propre, professionnel et parfaitement responsive.
+
+Sur desktop :
+
+BIFAUMA doit être clairement visible comme nom de marque.
+
+La navigation doit être lisible et correctement espacée.
+
+Le CTA principal doit être clairement identifiable.
+
+Sur mobile :
+
+Créer une vraie navigation mobile.
+
+Utiliser un bouton menu propre.
+
+Le menu mobile doit :
+
+* s'ouvrir correctement ;
+* être facilement utilisable au doigt ;
+* ne pas dépasser l'écran ;
+* permettre de fermer le menu facilement ;
+* fermer automatiquement après sélection d'un lien ;
+* ne pas bloquer inutilement le contenu.
+
+Le header ne doit pas prendre trop de place sur mobile.
+
+==================================================
+6. IDENTITÉ VISUELLE
+====================
+
+BIFAUMA n'a pas besoin d'un logo graphique complexe.
+
+Le nom :
+
+BIFAUMA
+
+doit servir de marque visuelle principale.
+
+Créer une présentation typographique professionnelle du nom BIFAUMA.
+
+Ne pas inventer de faux logos partenaires.
+
+Ne pas ajouter de logos d'entreprises qui ne sont pas réellement partenaires de BIFAUMA.
+
+Ne pas inventer de certifications.
+
+Ne pas inventer de chiffres.
+
+Ne pas inventer de clients.
+
+Ne pas inventer de partenaires.
+
+==================================================
+7. HERO / PREMIER ÉCRAN
+=======================
+
+Le premier écran doit immédiatement expliquer la proposition de valeur.
+
+Le visiteur doit comprendre que BIFAUMA propose des solutions de prêt et de financement.
+
+Le hero doit comporter :
+
+* un titre fort ;
+* un court texte explicatif ;
+* un CTA principal ;
+* éventuellement un CTA secondaire ;
+* un visuel pertinent si le design actuel en utilise un.
+
+Exemple de direction éditoriale :
+
+"Financez vos projets avec BIFAUMA"
+
+"Des solutions de prêt et de financement adaptées à vos besoins, avec un accompagnement à chaque étape de votre projet."
+
+CTA principal :
+
+"Demander un financement"
+
+CTA secondaire :
+
+"Découvrir nos solutions"
+
+Tu peux améliorer cette formulation si le contenu existant fournit une meilleure information.
+
+Évite les slogans vagues ou trop génériques.
+
+==================================================
+8. SECTION SOLUTIONS / SERVICES
+===============================
+
+Présenter clairement les différentes solutions réellement proposées par BIFAUMA.
+
+Ne crée pas de services fictifs.
+
+Chaque solution doit expliquer :
+
+* ce qu'elle est ;
+* à qui elle s'adresse ;
+* à quoi elle sert ;
+* éventuellement comment démarrer une demande.
+
+Exemples possibles uniquement si réellement proposés :
+
+* Prêt personnel ;
+* Prêt professionnel ;
+* Financement de projet ;
+* Solutions de financement pour entreprises.
+
+Ne pas ajouter automatiquement ces catégories si elles ne correspondent pas au contenu réel.
+
+Les cartes doivent être :
+
+* visuellement propres ;
+* homogènes ;
+* lisibles sur mobile ;
+* parfaitement alignées sur desktop ;
+* accessibles au clavier.
+
+==================================================
+9. SECTION "COMMENT ÇA MARCHE"
+==============================
+
+Ajouter ou améliorer une section expliquant clairement le processus.
+
+Exemple :
+
+01 — Faites votre demande
+
+Présentez votre besoin de financement.
+
+02 — Étude de votre dossier
+
+Votre demande est étudiée afin de comprendre votre besoin et votre projet.
+
+03 — Solution adaptée
+
+BIFAUMA vous accompagne vers une solution de financement adaptée.
+
+04 — Mise en place du financement
+
+Après validation du dossier, le financement est mis en place selon les conditions applicables.
+
+Ne promettre aucun délai ou résultat qui n'est pas officiellement garanti par BIFAUMA.
+
+==================================================
+10. CONFIANCE ET CRÉDIBILITÉ
+============================
+
+Le site doit inspirer confiance sans inventer d'informations.
+
+Mettre en valeur uniquement les informations réelles disponibles dans le projet.
+
+Si des informations existent déjà, mieux les présenter :
+
+* expérience ;
+* expertise ;
+* accompagnement ;
+* zone d'intervention ;
+* chiffres réels ;
+* informations légales ;
+* coordonnées ;
+* adresse ;
+* téléphone ;
+* email ;
+* équipe.
+
+Ne jamais fabriquer :
+
+* témoignages ;
+* statistiques ;
+* montants financés ;
+* nombre de clients ;
+* partenaires ;
+* certifications ;
+* agréments.
+
+Si une donnée manque, ne pas l'inventer.
+
+==================================================
+11. FORMULAIRE / DEMANDE DE FINANCEMENT
+=======================================
+
+Le parcours de demande doit être simple et rassurant.
+
+Le CTA "Demander un financement" doit être facilement accessible.
+
+Si un formulaire existe déjà, l'améliorer.
+
+Le formulaire doit :
+
+* être parfaitement responsive ;
+* être lisible ;
+* avoir des labels explicites ;
+* indiquer clairement les champs obligatoires ;
+* afficher correctement les erreurs ;
+* empêcher les soumissions invalides ;
+* donner un retour clair après soumission.
+
+Ne demander que les informations réellement nécessaires.
+
+Exemples :
+
+* nom ;
+* email ;
+* téléphone ;
+* type de besoin ;
+* montant recherché ;
+* description du projet.
+
+Ne demander aucune information sensible inutile.
+
+==================================================
+12. DESIGN DES BOUTONS
+======================
+
+Tous les boutons doivent avoir :
+
+* une taille cohérente ;
+* un contraste suffisant ;
+* des états hover ;
+* des états focus ;
+* un état active ;
+* un état disabled si nécessaire.
+
+Sur mobile :
+
+les boutons doivent être suffisamment grands pour une utilisation tactile.
+
+Éviter les boutons trop petits ou trop proches les uns des autres.
+
+Le CTA principal doit être visuellement prioritaire.
+
+==================================================
+13. TYPOGRAPHIE
+===============
+
+Corriger les tailles de texte afin d'obtenir une hiérarchie claire.
+
+Utiliser une typographie cohérente.
+
+Les titres doivent être :
+
+* visibles ;
+* lisibles ;
+* proportionnés ;
+* responsives.
+
+Utiliser si pertinent :
+
+clamp()
+
+pour adapter les tailles entre mobile et desktop.
+
+Éviter les titres gigantesques sur mobile.
+
+Éviter également les textes trop petits.
+
+Le texte courant doit rester confortable à lire.
+
+==================================================
+14. ESPACEMENTS
+===============
+
+Uniformiser :
+
+* padding ;
+* margin ;
+* gap ;
+* espaces entre sections ;
+* espaces entre titres et paragraphes ;
+* espaces entre cartes ;
+* espaces autour des CTA.
+
+Créer une vraie cohérence visuelle.
+
+Éviter :
+
+* sections trop serrées ;
+* sections inutilement gigantesques ;
+* espaces incohérents ;
+* éléments collés aux bords de l'écran.
+
+Utiliser une largeur maximale cohérente pour le contenu.
+
+Exemple de direction :
+
+max-width: 1200px ou valeur adaptée au design existant.
+
+==================================================
+15. DESKTOP
+===========
+
+Sur desktop, exploiter correctement l'espace disponible.
+
+Éviter que le contenu soit :
+
+* trop étiré ;
+* trop proche des bords ;
+* trop petit au centre ;
+* déséquilibré.
+
+Les sections doivent avoir une largeur maximale.
+
+Les grilles doivent être correctement alignées.
+
+Les cartes d'une même rangée doivent avoir une hauteur visuelle cohérente lorsque cela améliore le design.
+
+==================================================
+16. TABLETTE
+============
+
+Ne pas considérer la tablette comme un simple mobile ou un petit desktop.
+
+Adapter :
+
+* les colonnes ;
+* les espacements ;
+* la taille des titres ;
+* le menu ;
+* les cartes ;
+* les images.
+
+Vérifier particulièrement les largeurs autour de 768–1024px.
+
+==================================================
+17. IMAGES
+==========
+
+Optimiser toutes les images.
+
+Vérifier :
+
+* dimensions ;
+* ratio ;
+* object-fit ;
+* chargement ;
+* poids ;
+* responsive ;
+* alt text.
+
+Une image ne doit jamais provoquer de déformation.
+
+Utiliser lazy loading lorsque pertinent.
+
+==================================================
+18. ACCESSIBILITÉ
+=================
+
+Améliorer l'accessibilité :
+
+* HTML sémantique ;
+* boutons correctement utilisés ;
+* liens correctement utilisés ;
+* labels de formulaires ;
+* aria-label lorsque nécessaire ;
+* navigation clavier ;
+* focus visible ;
+* contraste suffisant ;
+* alt text ;
+* ordre logique des titres.
+
+Ne pas utiliser un simple div cliquable à la place d'un bouton ou d'un lien lorsque ce n'est pas nécessaire.
+
+==================================================
+19. ANIMATIONS
+==============
+
+Conserver les animations utiles mais éviter les animations excessives.
+
+Les animations doivent être :
+
+* fluides ;
+* rapides ;
+* professionnelles ;
+* non bloquantes.
+
+Éviter les animations qui ralentissent la navigation.
+
+Respecter également :
+
+prefers-reduced-motion
+
+pour les utilisateurs qui préfèrent réduire les animations.
+
+==================================================
+20. PERFORMANCE
+===============
+
+Optimiser le site React.
+
+Vérifier :
+
+* composants inutiles ;
+* JavaScript inutile ;
+* images lourdes ;
+* dépendances inutiles ;
+* re-renders inutiles ;
+* chargement initial ;
+* lazy loading ;
+* fonts ;
+* assets.
+
+Ne pas ajouter de bibliothèque lourde pour une fonctionnalité qui peut être réalisée simplement avec le code existant.
+
+Conserver une architecture propre.
+
+==================================================
+21. SEO
+=======
+
+Vérifier et améliorer :
+
+* title ;
+* meta description ;
+* H1 ;
+* H2 ;
+* H3 ;
+* alt des images ;
+* favicon ;
+* Open Graph ;
+* robots.txt ;
+* sitemap si pertinent ;
+* canonical si nécessaire.
+
+Le contenu doit être naturellement orienté autour des notions :
+
+* BIFAUMA ;
+* prêt ;
+* financement ;
+* demande de financement ;
+* accompagnement au financement ;
+* financement de projets.
+
+Ne pas faire de keyword stuffing.
+
+==================================================
+22. FOOTER
+==========
+
+Le footer doit être propre et professionnel.
+
+Inclure uniquement les informations réellement disponibles :
+
+* BIFAUMA ;
+* navigation ;
+* solutions ;
+* contact ;
+* téléphone ;
+* email ;
+* adresse ;
+* mentions légales ;
+* politique de confidentialité.
+
+Sur mobile, organiser les éléments en colonnes empilées de manière lisible.
+
+==================================================
+23. COHÉRENCE DU CONTENU
+========================
+
+Relire tout le contenu du site.
+
+Corriger :
+
+* fautes d'orthographe ;
+* formulations maladroites ;
+* répétitions ;
+* textes trop longs ;
+* textes vagues ;
+* incohérences entre sections.
+
+Le ton doit être :
+
+* professionnel ;
+* rassurant ;
+* humain ;
+* simple ;
+* direct.
+
+Éviter le jargon financier inutile.
+
+==================================================
+24. NE PAS SURCHARGER LE DESIGN
+===============================
+
+Ne pas ajouter des éléments uniquement pour "faire joli".
+
+Chaque section doit avoir une fonction.
+
+Éviter :
+
+* trop de couleurs ;
+* trop d'animations ;
+* trop d'icônes ;
+* trop de cartes ;
+* trop de gradients ;
+* trop de texte ;
+* trop de CTA différents.
+
+Le résultat doit donner une impression de sérieux et de maîtrise.
+
+==================================================
+25. COMPATIBILITÉ
+=================
+
+Vérifier le fonctionnement sur :
+
+* Chrome ;
+* Firefox ;
+* Edge ;
+* Safari lorsque possible.
+
+Vérifier particulièrement :
+
+* navigation ;
+* formulaires ;
+* menus ;
+* boutons ;
+* responsive ;
+* images ;
+* animations.
+
+==================================================
+26. RÈGLE IMPORTANTE : NE PAS CASSER L'EXISTANT
+===============================================
+
+Avant toute modification :
+
+1. Inspecter la structure du projet.
+2. Identifier les composants existants.
+3. Identifier les routes.
+4. Identifier les styles.
+5. Identifier les dépendances.
+6. Comprendre le fonctionnement actuel.
+
+Ensuite seulement effectuer les modifications.
+
+Ne pas supprimer une fonctionnalité existante simplement parce qu'elle pourrait être faite différemment.
+
+Ne pas réécrire tout le projet si ce n'est pas nécessaire.
+
+==================================================
+27. TEST FINAL OBLIGATOIRE
+==========================
+
+Après les modifications :
+
+* lancer le projet ;
+* vérifier qu'il compile ;
+* vérifier qu'il n'y a aucune erreur console importante ;
+* tester toutes les routes ;
+* tester le menu desktop ;
+* tester le menu mobile ;
+* tester les formulaires ;
+* tester les boutons ;
+* tester les liens ;
+* vérifier les images ;
+* vérifier le responsive.
+
+Tester au minimum :
+
+320px
+360px
+375px
+390px
+414px
+768px
+1024px
+1280px
+1440px
+1920px
+
+Rechercher spécifiquement :
+
+* overflow horizontal ;
+* textes coupés ;
+* boutons hors écran ;
+* images déformées ;
+* cartes cassées ;
+* sections trop grandes ;
+* éléments superposés ;
+* menu mobile défectueux.
+
+==================================================
+28. RÉSULTAT ATTENDU
+====================
+
+À la fin, le site doit donner l'impression d'une entreprise sérieuse de financement et de prêt.
+
+Le visiteur doit pouvoir comprendre rapidement :
+
+"BIFAUMA peut m'accompagner dans mon besoin de financement."
+
+Le site doit être :
+
+PROFESSIONNEL
++
+SIMPLE
++
+RASSURANT
++
+MODERNE
++
+RAPIDE
++
+PARFAITEMENT RESPONSIVE
+
+Le desktop et le mobile doivent être traités comme deux expériences complémentaires, et non comme une seule interface simplement réduite.
+
+==================================================
+29. IMPORTANT : NE PAS INVENTER
+===============================
+
+Ne jamais inventer de contenu commercial.
+
+Ne jamais inventer :
+
+* tarifs ;
+* taux ;
+* délais ;
+* garanties ;
+* montants ;
+* partenaires ;
+* témoignages ;
+* statistiques ;
+* agréments ;
+* certifications ;
+* services ;
+* conditions de prêt.
+
+Lorsque le code actuel contient déjà une information métier, la conserver sauf si elle est manifestement incorrecte.
+
+Lorsque l'information nécessaire manque, améliorer la structure sans inventer la donnée.
+
+==================================================
+30. LIVRABLE FINAL
+==================
+
+Après avoir effectué les corrections, donne-moi un résumé clair :
+
+1. Les problèmes identifiés.
+2. Les corrections effectuées.
+3. Les améliorations responsive mobile.
+4. Les améliorations desktop.
+5. Les améliorations UX/UI.
+6. Les améliorations performance.
+7. Les améliorations SEO/accessibilité.
+8. Les fichiers modifiés.
+9. Les éventuels points nécessitant encore des informations de BIFAUMA.
+
+Ne te contente pas de décrire ce qu'il faudrait faire.
+
+INSPECTE LE CODE EXISTANT ET EFFECTUE RÉELLEMENT LES CORRECTIONS.

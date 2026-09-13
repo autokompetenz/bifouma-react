@@ -410,6 +410,66 @@
 /* ---- Hero padding for fixed navbar on subpages ---- */
 .page-hero { padding-top: 130px; }
 
+/* ---- Mobile navigation ---- */
+.bif-hamburger {
+  position: relative;
+  display: inline-block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: #091337;
+  transition: background 0.25s ease;
+}
+.bif-hamburger::before,
+.bif-hamburger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: #091337;
+  transition: transform 0.25s ease, top 0.25s ease;
+}
+.bif-hamburger::before { top: -7px; }
+.bif-hamburger::after { top: 7px; }
+.navbar-toggler[aria-expanded='true'] .bif-hamburger { background: transparent; }
+.navbar-toggler[aria-expanded='true'] .bif-hamburger::before { top: 0; transform: rotate(45deg); }
+.navbar-toggler[aria-expanded='true'] .bif-hamburger::after { top: 0; transform: rotate(-45deg); }
+.navbar-toggler:focus { box-shadow: 0 0 0 0.2rem rgba(0, 141, 236, 0.25); }
+@media (max-width: 991.98px) {
+  .navigation .container { max-width: 100%; }
+  #bifMenu { background: rgba(255, 255, 255, 0.97); }
+  #bifMenu.show {
+    margin-top: 8px;
+    border-radius: 16px;
+    box-shadow: 0 24px 50px rgba(9, 19, 55, 0.16);
+    overflow: hidden;
+    max-height: calc(100vh - 96px);
+    overflow-y: auto;
+  }
+  #bifMenu .nav-item { border-bottom: 1px solid #eef1f7; }
+  #bifMenu .nav-item:last-child { border-bottom: 0; }
+  #bifMenu .nav-link { padding: 14px 18px; }
+}
+
+/* ---- Accessible labels & focus ---- */
+.bif-form label { display: block; }
+select.form-control, textarea.form-control, input[type='checkbox'] { accent-color: #008dec; }
+a:focus-visible,
+button:focus-visible,
+.btn:focus-visible,
+.nav-link:focus-visible,
+.filter-pill:focus-visible,
+.loan-step-num:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+.navbar-toggler:focus-visible {
+  outline: 3px solid #008dec;
+  outline-offset: 2px;
+}
+
 /* ====================================================================
    BIFAUMA REBRAND — layout, espacements & mobile
    ==================================================================== */

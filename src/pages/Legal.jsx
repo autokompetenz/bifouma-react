@@ -11,7 +11,7 @@ export default function LegalPage({ type }) {
       <section className="section-lg page-hero">
         <div className="container">
           <div className="text-center mb-5">
-            <h2 className="section-title">{faq.title}</h2>
+            <h1 className="section-title">{faq.title}</h1>
             <p>{faq.subtitle}</p>
           </div>
           <div className="row justify-content-center">
@@ -35,7 +35,7 @@ export default function LegalPage({ type }) {
     <section className="section-lg page-hero">
       <div className="container">
         <div className="text-center mb-5">
-          <h2 className="section-title">{p.title}</h2>
+          <h1 className="section-title">{p.title}</h1>
           {p.intro && <p>{p.intro}</p>}
         </div>
         <div className="row justify-content-center">

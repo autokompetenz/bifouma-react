@@ -10,12 +10,11 @@ export default function About() {
   const serviceItems = t('service.items');
   const stats = t('about.stats');
   const certs = t('about.certs');
-  const members = t('team.members');
 
   const counterMap = {
-    '€850K+': { end: 850, prefix: '€', suffix: 'K+' },
-    '26': { end: 26 },
-    '3': { end: 3 },
+    '72 h': { end: 72, suffix: ' h' },
+    '0 €': { end: 0, suffix: ' €' },
+    '3': { end: 3, prefix: '' },
   };
 
   return (
@@ -31,9 +30,9 @@ export default function About() {
               <p>{t('about.p1')}</p>
               <p>{t('about.p2')}</p>
               <div className="d-flex flex-wrap mt-4">
-                <Link to="/projects" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.invest')}</Link>
+                <Link to="/loan" className="btn btn-primary primary-shadow mr-2 mb-2">{t('misc.loan')}</Link>
                 <Link to="/submit" className="btn btn-secondary mr-2 mb-2">{t('misc.submitProject')}</Link>
-                <Link to="/loan" className="btn btn-outline-dark mb-2">{t('misc.loan')}</Link>
+                <Link to="/service" className="btn btn-outline-dark mb-2">{t('misc.services')}</Link>
               </div>
             </div>
             <div className="col-lg-12 mb-4">
@@ -108,32 +107,6 @@ export default function About() {
                 ))}
               </ul>
             </Reveal>
-          </div>
-        </div>
-      </section>
-
-      {/* team */}
-      <section className="section-lg team">
-        <div className="container">
-          <div className="row">
-            <div className="col-lg-12 text-center mb-5">
-              <h2 className="section-title">{t('about.teamTitle')}</h2>
-              <p>{t('team.subtitle')}</p>
-            </div>
-            {members.map((m) => (
-              <div className="col-md-6 col-lg-4 mb-4" key={m.name}>
-                <div className="rounded bg-white p-4 shadow-primary text-center h-100">
-                  <span
-                    className="d-flex align-items-center justify-content-center mx-auto rounded-circle text-white font-weight-bold mb-3"
-                    style={{ width: 72, height: 72, background: 'linear-gradient(25deg,#17ffd3,#008dec)' }}
-                  >
-                    {m.name.split(' ').map((p) => p[0]).join('')}
-                  </span>
-                  <h4 className="mb-0">{m.name}</h4>
-                  <h6 className="text-color mb-0">{m.role}</h6>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
       </section>

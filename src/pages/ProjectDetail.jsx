@@ -1,6 +1,6 @@
 import { useParams, Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
-import { projects, sectorLabels, riskLabels, countryLabels } from '../data/projects.js';
+import { projects, sectorLabels, countryLabels } from '../data/projects.js';
 import ProjectVisual from '../components/ProjectVisual.jsx';
 
 export default function ProjectDetail() {
@@ -26,36 +26,10 @@ export default function ProjectDetail() {
           <div className="col-lg-6">
             <div className="d-flex flex-wrap align-items-center mb-2">
               <span className="badge mr-2" style={{ background: '#008dec', color: '#fff' }}>{c(sectorLabels[p.sector])}</span>
-              <span className="badge mr-2" style={{ background: '#eef2ff', color: '#4d546f' }}>{t(`projects.filters.${p.risk}`)} · {t('projects.filters.risk')}</span>
               <span className="badge" style={{ background: '#eef2ff', color: '#4d546f' }}><i className="ti-pin mr-1" />{c(countryLabels[p.country])}</span>
             </div>
-            <h2 className="mb-3">{content.title}</h2>
+            <h1 className="h2 mb-3">{content.title}</h1>
             <p>{content.description}</p>
-
-            <div className="stat-grid mt-4">
-              <div className="stat-cell">
-                <div className="stat-value">€{p.raised.toLocaleString()}</div>
-                <div className="stat-label">{t('projects.raised')}</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-value">{p.returnRate}%</div>
-                <div className="stat-label">{t('projects.expected')}</div>
-              </div>
-              <div className="stat-cell">
-                <div className="stat-value">{p.durationMonths}</div>
-                <div className="stat-label">{t('projects.duration')}</div>
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <div className="d-flex justify-content-between">
-                <span>{t('projects.progress')}</span>
-                <strong>{p.progress}%</strong>
-              </div>
-              <div className="progress mt-1">
-                <div className="progress-bar" style={{ width: `${p.progress}%` }} />
-              </div>
-            </div>
 
             <div className="text-center mt-5">
               <a href={telegram} target="_blank" rel="noreferrer" className="btn btn-primary primary-shadow mr-2 mb-2">
@@ -68,11 +42,11 @@ export default function ProjectDetail() {
 
         <div className="row mt-5">
           <div className="col-lg-7">
-            <h3 className="section-title">{t('projectDetail.conclusionTitle')}</h3>
+            <h2 className="section-title">{t('projectDetail.conclusionTitle')}</h2>
             <p>{content.conclusion}</p>
           </div>
           <div className="col-lg-5">
-            <h3 className="section-title">{t('projectDetail.documents')}</h3>
+            <h2 className="section-title">{t('projectDetail.documents')}</h2>
             <ul className="service-list pl-0">
               {content.docs.map((d) => (
                 <li key={d}><i className="ti-file text-purple mr-2" />{d}</li>
@@ -93,7 +67,7 @@ function NotFoundLink() {
   const { t } = useI18n();
   return (
     <section className="section-lg page-hero text-center">
-      <h2>{t('notFound.title')}</h2>
+      <h1>{t('notFound.title')}</h1>
       <Link to="/projects" className="btn btn-primary mt-4">{t('notFound.back')}</Link>
     </section>
   );

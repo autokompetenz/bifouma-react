@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import PageTransition from './components/PageTransition.jsx';
+import { useI18n } from './i18n.jsx';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
 import Service from './pages/Service.jsx';
@@ -16,7 +17,9 @@ import NotFound from './pages/NotFound.jsx';
 
 function ScrollAndTitle() {
   const { pathname, hash } = useLocation();
+  const { t } = useI18n();
   useEffect(() => {
+    if (t('meta.title')) document.title = t('meta.title');
     if (hash) {
       const el = document.querySelector(hash);
       if (el) {
@@ -25,7 +28,7 @@ function ScrollAndTitle() {
       }
     }
     window.scrollTo({ top: 0 });
-  }, [pathname, hash]);
+  }, [pathname, hash, t]);
   return null;
 }
 
