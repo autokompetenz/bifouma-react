@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
 
 export default function Navbar() {
   const { t } = useI18n();
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [open, setOpen] = useState(false);
+  const onDark = location.pathname === '/' && !scrolled && !open;
 
   useEffect(() => {
     let lastY = window.scrollY;
@@ -31,20 +33,17 @@ export default function Navbar() {
   const links = [
     { to: '/', label: t('nav.home'), end: true },
     { to: '/#solutions', label: t('nav.features'), end: true },
+    { to: '/#how', label: t('nav.comment'), end: true },
     { to: '/about', label: t('nav.about') },
-    { to: '/service', label: t('nav.service') },
-    { to: '/projects', label: t('nav.projects') },
-    { to: '/loan', label: t('nav.loan') },
-    { to: '/submit', label: t('nav.submitProject') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
   return (
-    <header className={`fixed-top navigation ${scrolled ? 'nav-bg' : ''} ${hidden ? 'nav-hidden' : ''}`}>
+    <header className={`fixed-top navigation ${scrolled ? 'nav-bg' : ''} ${hidden ? 'nav-hidden' : ''} ${onDark ? 'nav-on-dark' : ''}`}>
       <div className="container">
         <nav className="navbar navbar-expand-lg navbar-light px-0" aria-label={t('nav.menu')}>
           <Link className="navbar-brand" to="/" onClick={close}>
-            <img src="/assets/images/logo.png" alt="BIFAUMA" style={{ height: 36 }} />
+            <span className="bif-wordmark">BIFAUMA</span>
           </Link>
           <div className="d-flex align-items-center order-lg-3 ml-auto ml-lg-3">
             <LanguageSwitcher compact />

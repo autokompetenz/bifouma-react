@@ -45,6 +45,7 @@ const translations = {
       loan: 'Kreditanfrage',
       tryFree: 'Finanzierung anfragen',
       menu: 'Menü',
+      comment: 'So funktioniert es',
     },
     hero: {
       title1: 'Finanzieren Sie Ihre',
@@ -53,6 +54,7 @@ const translations = {
         'Kredite und Finanzierungslösungen, die zu Ihrem Bedarf passen — mit persönlicher Begleitung in jeder Phase Ihres Projekts.',
       explore: 'Unsere Lösungen entdecken',
       tryFree: 'Finanzierung anfragen',
+      trust: 'Bearbeitung innerhalb von 72 Stunden · Unverbindlich · Begleitung in 3 Sprachen',
     },
     features: {
       title: 'Warum BIFAUMA',
@@ -246,6 +248,8 @@ const translations = {
     },
     footer: {
       tagline: 'Kredit- und Finanzierungslösungen, die zu Ihrem Bedarf passen — mit Begleitung in jeder Phase.',
+      ctaTitle: 'Sie haben ein Projekt zu finanzieren?',
+      ctaBtn: 'Finanzierung anfragen',
       links: 'Navigation',
       legal: 'Rechtliches',
       rights: 'Alle Rechte vorbehalten.',
@@ -337,6 +341,7 @@ const translations = {
       loan: 'Lainahakemus',
       tryFree: 'Hae rahoitusta',
       menu: 'Valikko',
+      comment: 'Näin se toimii',
     },
     hero: {
       title1: 'Rahoita projektisi',
@@ -345,6 +350,7 @@ const translations = {
         'Laina- ja rahoitusratkaisuja, jotka sopivat tarpeisiisi — henkilökohtaisella tukevalla jokaisessa projektisi vaiheessa.',
       explore: 'Tutustu ratkaisuihimme',
       tryFree: 'Hae rahoitusta',
+      trust: 'Käsittely 72 tunnin kuluessa · Sitoumuksetonta · Tuki kolmella kielellä',
     },
     features: {
       title: 'Miksi BIFAUMA',
@@ -538,6 +544,8 @@ const translations = {
     },
     footer: {
       tagline: 'Laina- ja rahoitusratkaisuja, jotka sopivat tarpeisiisi — tuella jokaisessa vaiheessa.',
+      ctaTitle: 'Onko sinulla projektia rahoitettavaksi?',
+      ctaBtn: 'Hae rahoitusta',
       links: 'Navigointi',
       legal: 'Lakiasiat',
       rights: 'Kaikki oikeudet pidätetään.',
@@ -629,6 +637,7 @@ const translations = {
       loan: 'Захтев за кредит',
       tryFree: 'Затражи финансирање',
       menu: 'Мени',
+      comment: 'Како функционише',
     },
     hero: {
       title1: 'Финансирајте своје',
@@ -637,6 +646,7 @@ const translations = {
         'Кредитна и финансијска решења која одговарају вашим потребама — са пратњом у свакој фази вашег пројекта.',
       explore: 'Погледај наша решења',
       tryFree: 'Затражи финансирање',
+      trust: 'Обрада у року од 72 сата · Без обавеза · Пратња на 3 језика',
     },
     features: {
       title: 'Зашто BIFAUMA',
@@ -830,6 +840,8 @@ const translations = {
     },
     footer: {
       tagline: 'Решења кредита и финансирања прилагођена вашим потребама — са пратњом у свакој фази.',
+      ctaTitle: 'Имате пројекат за финансирање?',
+      ctaBtn: 'Затражи финансирање',
       links: 'Навигација',
       legal: 'Правне информације',
       rights: 'Сва права задржана.',
@@ -921,6 +933,7 @@ const translations = {
       loan: 'Demande de prêt',
       tryFree: 'Demander un financement',
       menu: 'Menu',
+      comment: 'Comment ça marche',
     },
     hero: {
       title1: 'Financez vos projets',
@@ -929,6 +942,7 @@ const translations = {
         'Des solutions de prêt et de financement adaptées à vos besoins, avec un accompagnement à chaque étape de votre projet.',
       explore: 'Découvrir nos solutions',
       tryFree: 'Demander un financement',
+      trust: 'Traitement sous 72 h · Sans engagement · Accompagnement en 3 langues',
     },
     features: {
       title: 'Pourquoi BIFAUMA',
@@ -1122,6 +1136,8 @@ const translations = {
     },
     footer: {
       tagline: 'Des solutions de prêt et de financement adaptées à vos besoins, avec un accompagnement à chaque étape.',
+      ctaTitle: 'Vous avez un projet à financer ?',
+      ctaBtn: 'Demander un financement',
       links: 'Navigation',
       legal: 'Mentions légales',
       rights: 'Tous droits réservés.',
@@ -1183,7 +1199,7 @@ const I18nContext = createContext(null);
 
 export function I18nProvider({ children }) {
   const [lang, setLang] = useState(() => {
-    const saved = localStorage.getItem('bifouma-lang');
+    const saved = typeof localStorage !== 'undefined' ? localStorage.getItem('bifouma-lang') : null;
     return saved && translations[saved] ? saved : DEFAULT_LANG;
   });
 

@@ -10,11 +10,15 @@ export default function Footer() {
   return (
     <footer className="footer-section footer">
       <div className="container">
+        <div className="row footer-cta-row">
+          <div className="col-lg-12 text-center">
+            <h3 className="footer-cta-title">{t('footer.ctaTitle')}</h3>
+            <Link to="/loan" className="btn btn-primary btn-lg footer-cta-btn">{t('footer.ctaBtn')}</Link>
+          </div>
+        </div>
         <div className="row justify-content-between">
           <div className="col-lg-4 text-center text-lg-left mb-4 mb-lg-0">
-            <a href="/">
-              <img className="img-fluid" src="/assets/images/logo.png" alt="BIFAUMA logo" />
-            </a>
+            <span className="bif-wordmark bif-wordmark--footer">BIFAUMA</span>
             <p className="mt-3" style={{ color: '#aab3cc', fontSize: 15 }}>
               {t('footer.tagline')}
             </p>

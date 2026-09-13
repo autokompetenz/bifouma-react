@@ -74,6 +74,14 @@ export default function Home() {
                 <Link to="/loan" className="btn btn-primary btn-lg primary-shadow mr-2">{t('hero.tryFree')}</Link>
                 <Link to="/service" className="btn btn-secondary btn-lg">{t('hero.explore')}</Link>
               </div>
+              <div className="hero-trust">
+                {t('home.stats').slice(0, 3).map((s) => (
+                  <span key={s.label}>
+                    <i className="ti-check" aria-hidden="true" />
+                    <strong>{s.value}</strong>&nbsp;{s.label}
+                  </span>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -171,7 +179,7 @@ export default function Home() {
       </section>
 
       {/* how it works */}
-      <section className="section-lg seo">
+      <section className="section-lg seo" id="how">
         <div className="container">
           <div className="row">
             <Reveal as="div" className="col-md-6">

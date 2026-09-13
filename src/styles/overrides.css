@@ -636,3 +636,279 @@ p { font-size: 16px; line-height: 1.7; }
 @media (prefers-reduced-motion: reduce) {
   .hero-bif { background-attachment: scroll; }
 }
+
+/* ====================================================================
+   IDENTITÉ BIFAUMA 2026 — société de financement moderne & fiable
+   Palette sobre : bleu nuit / bleu / accent turquoise unique / fonds clairs
+   ==================================================================== */
+
+:root {
+  --bf-navy: #071A3A;
+  --bf-navy-2: #0B1736;
+  --bf-blue: #0879D1;
+  --bf-blue-dark: #0663b0;
+  --bf-teal: #16C7B7;
+  --bf-bg: #F7F9FC;
+  --bf-line: #E3E9F3;
+  --bf-ink: #1B2B4B;
+  --bf-muted: #5A6B8C;
+  --bf-radius-sm: 8px;
+  --bf-radius-card: 14px;
+  --bf-radius-lg: 20px;
+}
+
+/* ---- Typographie : professionnelle, hiérarchie claire ---- */
+body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6,
+.section-title, .navbar-brand, .bif-wordmark { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+h4, .h4 { font-size: clamp(18px, 2.4vw, 22px); font-weight: 650; color: var(--bf-navy-2); letter-spacing: -0.01em; }
+.section-title { color: var(--bf-navy-2); font-weight: 750; letter-spacing: -0.02em; }
+p { color: var(--bf-ink); }
+
+/* ---- Boutons : bleu uni, pas de gros gradient ---- */
+.btn { font-weight: 600; letter-spacing: 0.01em; border-radius: var(--bf-radius-sm); }
+.btn-lg { padding: 14px 40px; font-size: 17px; }
+.btn-primary {
+  background: var(--bf-blue);
+  border: 1px solid var(--bf-blue);
+  background-image: none !important;
+  color: #fff;
+  box-shadow: 0 10px 24px rgba(8, 121, 209, 0.22);
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background: var(--bf-blue-dark) !important;
+  border-color: var(--bf-blue-dark) !important;
+  background-image: none !important;
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(8, 121, 209, 0.28);
+}
+.btn-secondary {
+  background: var(--bf-bg);
+  border: 1px solid #CBD7E8;
+  background-image: none !important;
+  color: var(--bf-navy-2);
+}
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+  background: #fff !important;
+  border-color: var(--bf-blue) !important;
+  background-image: none !important;
+  color: var(--bf-blue);
+  transform: translateY(-1px);
+}
+.btn-outline-dark {
+  border-color: #CBD7E8;
+  color: var(--bf-navy-2);
+  background-image: none;
+}
+.btn-outline-dark:hover {
+  background: var(--bf-navy) !important;
+  border-color: var(--bf-navy) !important;
+  color: #fff;
+}
+
+/* ---- Ombres discrètes & arrondis cohérents ---- */
+.primary-shadow,
+.shadow-primary {
+  box-shadow: 0 12px 30px rgba(11, 23, 54, 0.08) !important;
+}
+.project-card,
+.stat-cell,
+.brand-visual,
+.loan-cta-card,
+.footer-cta-row,
+.service-bg-image .rounded,
+.contact-bg .rounded,
+#bifMenu.show {
+  border-radius: var(--bf-radius-card);
+}
+.brand-visual { box-shadow: 0 18px 40px rgba(11, 23, 54, 0.18); }
+.project-card { box-shadow: 0 10px 26px rgba(11, 23, 54, 0.07); }
+.project-card:hover {
+  box-shadow: 0 18px 40px rgba(11, 23, 54, 0.12);
+  transform: translateY(-4px);
+}
+.stat-cell { box-shadow: 0 8px 22px rgba(11, 23, 54, 0.05); }
+.loan-cta-card,
+.footer-cta-row { box-shadow: none; }
+
+/* ---- Fond clair général ---- */
+.section, .section-lg { background: transparent; }
+.service-bg-image { background: linear-gradient(160deg, #0A1C3F 0%, #081730 100%) !important; }
+.contact-bg { background: linear-gradient(160deg, var(--bf-bg) 0%, #fff 100%); }
+
+/* ---- Hero : sobre, premium, orienté financement ---- */
+.hero-section.hero-bif {
+  padding-top: clamp(150px, 18vw, 190px);
+  padding-bottom: 92px;
+  background:
+    radial-gradient(720px 360px at 82% -14%, rgba(8, 121, 209, 0.35), transparent 62%),
+    radial-gradient(520px 300px at -8% 112%, rgba(22, 199, 183, 0.20), transparent 60%),
+    linear-gradient(180deg, #071A3A 0%, #0A2350 100%);
+}
+.hero-section.hero-bif h1 { color: #fff; font-weight: 750; letter-spacing: -0.02em; }
+.hero-section.hero-bif p { color: rgba(255, 255, 255, 0.82); margin: 0 auto; max-width: 760px; }
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 26px;
+}
+.hero-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 7px 14px;
+}
+.hero-trust i { color: var(--bf-teal); }
+
+/* ---- Wordmark BIFAUMA ---- */
+.bif-wordmark {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  color: #fff;
+  line-height: 1;
+}
+.bif-wordmark--footer { font-size: 30px; color: #fff; }
+.navbar .bif-wordmark { color: var(--bf-navy-2); }
+.nav-hidden .bif-wordmark,
+.nav-bg .bif-wordmark { color: var(--bf-navy-2); }
+.navigation.nav-on-dark .bif-wordmark { color: #fff; }
+.navigation.nav-on-dark .bif-hamburger,
+.navigation.nav-on-dark .bif-hamburger::before,
+.navigation.nav-on-dark .bif-hamburger::after { background: #fff; }
+.navigation.nav-on-dark .lang-switch button {
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.navigation.nav-on-dark .lang-switch button.active,
+.navigation.nav-on-dark .lang-switch button:hover { background: var(--bf-blue); border-color: var(--bf-blue); }
+.navigation.nav-on-dark .nav-link { color: rgba(255, 255, 255, 0.9); }
+.navigation.nav-on-dark .nav-link:hover,
+.navigation.nav-on-dark .nav-link.active { color: #fff; }
+
+/* ---- Footer : navy uni + CTA final ---- */
+.footer { background: var(--bf-navy) !important; background-image: none !important; }
+.footer-section { padding-top: 90px; padding-bottom: 70px; }
+.footer-cta-row {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 52px;
+  padding: 44px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+.footer-cta-title { color: #fff; font-weight: 700; margin-bottom: 18px; }
+
+/* ---- Cartes services homogènes ---- */
+.service-bg-image .bg-white,
+.contact .bg-white {
+  border: 1px solid var(--bf-line);
+  border-radius: var(--bf-radius-card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.service-bg-image .bg-white:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(11, 23, 54, 0.1); }
+.round-icon { background: rgba(8, 121, 209, 0.1); color: var(--bf-blue); }
+.service-bg-image .round-icon.blue { background: rgba(8, 121, 209, 0.14); color: var(--bf-blue); }
+.service-bg-image h4 { color: #0B1736; }
+.service-bg-image .bg-white p { color: var(--bf-muted); }
+
+/* ---- Stats : présentations sobres ---- */
+.stat-cell { background: #fff; border: 1px solid var(--bf-line); }
+.stat-cell .stat-value { color: var(--bf-navy-2); font-weight: 800; }
+.stat-cell .stat-label { color: var(--bf-muted); font-weight: 500; }
+
+/* ---- Stepper + logo loan CTA : turquoise réduit à l'accent ---- */
+.loan-step.active .loan-step-num,
+.loan-step.done::before,
+.loan-step.active::before {
+  background: var(--bf-blue);
+  background-image: none;
+}
+.loan-step.done .loan-step-num { border-color: var(--bf-blue); color: var(--bf-blue); }
+.loan-step.active .loan-step-label { color: var(--bf-blue); }
+.loan-cta-tag { color: var(--bf-teal); border-color: rgba(22, 199, 183, 0.45); }
+.loan-cta-fact strong { color: var(--bf-teal); }
+.loan-cta-num {
+  background: var(--bf-blue);
+  color: #fff;
+}
+.loan-cta-card {
+  background:
+    radial-gradient(560px 260px at 90% -10%, rgba(8, 121, 209, 0.35), transparent 60%),
+    linear-gradient(115deg, #071A3A 0%, #0B2450 60%, #0E2F66 100%);
+}
+.loan-cta-card::before { background: none; }
+.loan-cta-card h2 { color: #fff; }
+
+/* ---- Filters & pills : accent bleu ---- */
+.filter-pill.active,
+.filter-pill:hover { background: var(--bf-blue); border-color: var(--bf-blue); }
+.lang-switch button.active,
+.lang-switch button:hover { background: var(--bf-blue); border-color: var(--bf-blue); }
+.bif-hamburger,
+.bif-hamburger::before,
+.bif-hamburger::after { background: var(--bf-navy-2); }
+.navbar-collapse .lang-switch button { color: var(--bf-muted); }
+
+/* ---- Champ focus : accent bleu ---- */
+.bif-form .form-control:focus { border-color: var(--bf-blue); box-shadow: 0 0 0 0.15rem rgba(8, 121, 209, 0.16); }
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible { outline-color: var(--bf-blue); }
+
+/* ---- Mobile : expérience autonome 320-414px ---- */
+@media (max-width: 414px) {
+  .hero-section.hero-bif h1 { font-size: clamp(28px, 9vw, 34px); }
+  .hero-section.hero-bif p { font-size: 15.5px; }
+  .btn, .btn-lg { width: 100%; max-width: 420px; }
+  .hero-bif .btn, .loan-cta-btn, .footer-cta-btn { margin-right: 0 !important; }
+  .hero-bif .btn + .btn { margin-top: 12px; }
+  .footer-cta-title { font-size: 24px; }
+  .loan-cta-facts { flex-direction: column; gap: 10px; }
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat-cell { padding: 16px 10px; }
+  .stat-cell .stat-value { font-size: 20px; }
+  .stat-cell .stat-label { font-size: 12px; }
+  #bifMenu .nav-link { padding: 15px 18px; font-size: 16px; }
+  .footer-links a { padding: 7px 0; }
+  .footer-section { padding-top: 64px; }
+  .section-title { font-size: 26px; }
+}
+
+@media (min-width: 415px) and (max-width: 575px) {
+  .btn, .btn-lg { min-height: 48px; display: inline-flex; align-items: center; justify-content: center; }
+  .hero-bif .btn + .btn { margin-left: 10px; }
+}
+
+/* ---- Tablette : adaptée, ni mobile ni desktop ---- */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .section-lg { padding-top: 76px; padding-bottom: 76px; }
+  .brand-visual { min-height: 260px; padding: 32px 30px; }
+  .hero-section.hero-bif h1 { font-size: clamp(30px, 6vw, 44px); }
+  .navbar-brand { margin-right: 0; }
+}
+
+/* ---- Desktop : largeur max cohérente ---- */
+@media (min-width: 1200px) {
+  .container { max-width: 1180px; }
+}
+@media (min-width: 1600px) {
+  .container { max-width: 1280px; }
+}
+.hero-bif .btn-light, .hero-bif .btn-secondary { border: 1px solid rgba(255, 255, 255, 0.25); background: rgba(255, 255, 255, 0.08); color: #fff; }
+.hero-bif .btn-secondary:hover { background: rgba(255, 255, 255, 0.14) !important; border-color: rgba(255, 255, 255, 0.4) !important; color: #fff; }
