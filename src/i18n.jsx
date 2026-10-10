@@ -34,6 +34,15 @@ const translations = {
         { value: '3', label: 'Länder (DE · FI · SR)' },
       ],
       statsNote: 'Fristen und Konditionen sind unverbindlich: jede Anfrage wird individuell geprüft.',
+      legalNotice: 'Ein Kredit verpflichtet und muss zurückgezahlt werden. Prüfen Sie Ihre Rückzahlungsfähigkeit, bevor Sie sich verpflichten.',
+      sim: {
+        title: 'Finanzierung simulieren',
+        amountLabel: 'Gewünschter Betrag',
+        durationLabel: 'Laufzeit',
+        months: 'Monate',
+        cta: 'Unverbindlich fortfahren',
+        note: 'Unverbindliche Beispielrechnung — Antwort innerhalb von 72 Std.',
+      },
     },
     loanCta: {
       tag: 'KREDIT',
@@ -357,6 +366,15 @@ const translations = {
         { value: '3', label: 'maata (DE · FI · SR)' },
       ],
       statsNote: 'Ilmoitetut ajat ja ehdot ovat suuntaa-antavia: jokainen hakemus käsitellään yksilöllisesti.',
+      legalNotice: 'Luotto sitouttaa ja on maksettava takaisin. Tarkista takaisinmaksukykysi ennen sitoutumista.',
+      sim: {
+        title: 'Simuloi rahoituksesi',
+        amountLabel: 'Toivottu summa',
+        durationLabel: 'Takaisinmaksuaika',
+        months: 'kk',
+        cta: 'Jatka ilman sitoutumista',
+        note: 'Ohjeellinen simulointi — vastaus 72 tunnin kuluessa, ilman sitoutumista.',
+      },
     },
     loanCta: {
       tag: 'LAINA',
@@ -680,6 +698,15 @@ const translations = {
         { value: '3', label: 'земље (DE · FI · SR)' },
       ],
       statsNote: 'Наведени рокови и услови су информативни: сваки захтев се разматра појединачно.',
+      legalNotice: 'Кредит обавезује и мора се вратити. Проверите своју способност отплате пре него што се обавежете.',
+      sim: {
+        title: 'Симулирајте финансирање',
+        amountLabel: 'Жељени износ',
+        durationLabel: 'Рок отплате',
+        months: 'месеци',
+        cta: 'Наставите без обавезе',
+        note: 'Оријентациона симулација — одговор у року од 72 сата, без обавезе.',
+      },
     },
     loanCta: {
       tag: 'КРЕДИТ',
@@ -1003,6 +1030,15 @@ const translations = {
         { value: '3', label: 'pays (DE · FI · SR)' },
       ],
       statsNote: 'Délais et conditions communiqués à titre indicatif : chaque demande est étudiée individuellement.',
+      legalNotice: 'Un crédit vous engage et doit être remboursé. Vérifiez votre capacité de remboursement avant de vous engager.',
+      sim: {
+        title: 'Simulez votre financement',
+        amountLabel: 'Montant souhaité',
+        durationLabel: 'Durée de remboursement',
+        months: 'mois',
+        cta: 'Continuer sans engagement',
+        note: 'Simulation indicative — réponse sous 72 h, sans engagement.',
+      },
     },
     loanCta: {
       tag: 'CRÉDIT',

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import { sendForm, describeSendError, filesTooLarge, SendError } from '../lib/sendForm.js';
 
@@ -16,8 +17,18 @@ const emptyForm = {
 
 export default function Loan() {
   const { t, lang } = useI18n();
+  const [params] = useSearchParams();
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState(emptyForm);
+  // Pré-remplissage venant du simulateur de la page d'accueil (?amount=…&duration=…).
+  const [form, setForm] = useState(() => {
+    const amount = params.get('amount');
+    const duration = params.get('duration');
+    return {
+      ...emptyForm,
+      amount: amount || '',
+      duration: duration ? `${duration} ${t('projects.months')}` : '',
+    };
+  });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [errorMsg, setErrorMsg] = useState('');

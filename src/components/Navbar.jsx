@@ -9,8 +9,8 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const togglerRef = useRef(null);
-  // Toutes les pages ont un en-tête bleu nuit en haut : le header doit être
-  // en version claire tant qu'on n'a pas scrollé (sinon texte navy sur navy).
+  // En-tête clair en permanence (le hero de l'accueil est désormais clair) :
+  // une ombre n'apparaît qu'une fois la page défilée ou le menu ouvert.
   const solid = scrolled || open;
 
   useEffect(() => {
@@ -53,9 +53,7 @@ export default function Navbar() {
   ];
 
   return (
-    <header
-      className={`fixed-top navigation ${solid ? 'nav-bg' : ''} ${!solid ? 'nav-on-dark' : ''}`}
-    >
+    <header className={`fixed-top navigation y-nav ${solid ? 'y-nav--solid' : ''}`}>
       <div className="container">
         <nav className="navbar navbar-expand-lg px-0" aria-label={t('nav.menu')}>
           <Link className="navbar-brand" to="/" onClick={() => setOpen(false)}>
