@@ -69,6 +69,9 @@ const CONFIRM_LOCALES = {
     recapTitle: 'Récapitulatif de votre demande',
     closingTitle: 'Une question ? Contactez-nous :',
     yes: 'Oui',
+    badge: 'Demande reçue',
+    tagline: 'Prêt & financement',
+    footerNote: 'Message automatique — envoyé suite à votre demande sur bifauma-investieren.com.',
     signature: ['Cordialement,', "L'équipe BIFAUMA"],
     types: {
       loan: 'Demande de prêt',
@@ -97,6 +100,9 @@ const CONFIRM_LOCALES = {
     recapTitle: 'Zusammenfassung Ihrer Anfrage',
     closingTitle: 'Fragen? Kontaktieren Sie uns:',
     yes: 'Ja',
+    badge: 'Anfrage erhalten',
+    tagline: 'Kredite & Finanzierung',
+    footerNote: 'Automatische Nachricht — gesendet nach Ihrer Anfrage auf bifauma-investieren.com.',
     signature: ['Mit freundlichen Grüßen,', 'Ihr BIFAUMA-Team'],
     types: {
       loan: 'Kreditanfrage',
@@ -125,6 +131,9 @@ const CONFIRM_LOCALES = {
     recapTitle: 'Yhteenveto hakemuksestasi',
     closingTitle: 'Kysyttävää? Ota yhteyttä:',
     yes: 'Kyllä',
+    badge: 'Hakemus vastaanotettu',
+    tagline: 'Lainat & rahoitus',
+    footerNote: 'Automaattinen viesti — lähetetty hakemuksesi perusteella osoitteessa bifauma-investieren.com.',
     signature: ['Ystävällisin terveisin,', 'BIFAUMA-tiimi'],
     types: {
       loan: 'Lainahakemus',
@@ -153,6 +162,9 @@ const CONFIRM_LOCALES = {
     recapTitle: 'Преглед вашег захтева',
     closingTitle: 'Имате питање? Контактирајте нас:',
     yes: 'Да',
+    badge: 'Захтев примљен',
+    tagline: 'Кредити и финансирање',
+    footerNote: 'Аутоматска порука — послата након вашег захтева на bifauma-investieren.com.',
     signature: ['С поштовањем,', 'BIFAUMA тим'],
     types: {
       loan: 'Захтев за кредит',
@@ -325,28 +337,106 @@ function buildConfirmation(type, fields, lang) {
   const valueOf = (k) => (k === 'consent' ? L.yes : fields[k]);
 
   const rows = ordered
-    .map((k) => {
+    .map((k, i) => {
       const label = L.fields[k] || k;
-      return `<tr><td style="padding:6px 12px 6px 0;color:#55637A;vertical-align:top;white-space:nowrap">${escapeHtml(label)}</td><td style="padding:6px 0;color:#172033"><strong>${escapeHtml(valueOf(k))}</strong></td></tr>`;
+      const isLast = i === ordered.length - 1;
+      const border = isLast ? 'none' : '1px solid #EEF1F6';
+      return `<tr>`
+        + `<td style="padding:11px 16px 11px 0;border-bottom:${border};color:#55637A;font-size:13px;vertical-align:top;width:42%;">${escapeHtml(label)}</td>`
+        + `<td style="padding:11px 0;border-bottom:${border};color:#172033;font-size:15px;font-weight:600;vertical-align:top;">${escapeHtml(valueOf(k))}</td>`
+        + `</tr>`;
     })
     .join('');
 
-  const html = `
-    <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#172033">
-      <h2 style="color:#071A3A;margin:0 0 12px">BIFAUMA</h2>
-      <p style="margin:0 0 12px">${escapeHtml(greeting)}</p>
-      <p style="margin:0 0 12px;color:#55637A">${escapeHtml(L.thanks)}</p>
-      ${deadline ? `<p style="margin:0 0 20px;color:#55637A">${escapeHtml(deadline)}</p>` : ''}
-      <h3 style="color:#071A3A;margin:0 0 8px">${escapeHtml(L.recapTitle)} — ${escapeHtml(typeLabel)}</h3>
-      <table style="border-collapse:collapse">${rows}</table>
-      <p style="margin:24px 0 4px;color:#55637A">${escapeHtml(L.closingTitle)}</p>
-      <p style="margin:0 0 12px">Telegram : <a href="${TELEGRAM_URL}" style="color:#071A3A">${escapeHtml(TELEGRAM_LABEL)}</a><br />
-        Facebook : <a href="${FACEBOOK_URL}" style="color:#071A3A">BIFAUMA</a></p>
-      <p style="margin:0;color:#55637A">${L.signature.map(escapeHtml).join('<br />')}</p>
-    </div>`;
+  const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BIFAUMA</title>
+</head>
+<body style="margin:0;padding:0;background:#F6F8FB;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F6F8FB;padding:24px 12px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px;max-width:100%;background:#FFFFFF;border:1px solid #E4E8EF;border-radius:16px;overflow:hidden;font-family:Arial,Helvetica,sans-serif;">
+
+          <!-- En-tête -->
+          <tr>
+            <td style="background:#071A3A;padding:26px 34px;border-bottom:3px solid #16B8A6;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:22px;font-weight:700;letter-spacing:0.05em;color:#FFFFFF;">BIFAUMA</td>
+                  <td align="right" style="font-size:13px;letter-spacing:0.02em;color:#9FB3CF;">${escapeHtml(L.tagline)}</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Message -->
+          <tr>
+            <td style="padding:30px 34px 0;">
+              <span style="display:inline-block;background:#E6F7F5;color:#0E8C7E;font-size:12px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:6px 13px;border-radius:999px;">&#10003;&nbsp; ${escapeHtml(L.badge)}</span>
+              <h1 style="margin:20px 0 10px;font-size:21px;line-height:1.3;color:#071A3A;">${escapeHtml(greeting)}</h1>
+              <p style="margin:0 0 10px;font-size:15px;line-height:1.6;color:#55637A;">${escapeHtml(L.thanks)}</p>
+              ${deadline ? `<p style="margin:0;font-size:15px;line-height:1.6;color:#0879D1;font-weight:700;">${escapeHtml(deadline)}</p>` : ''}
+            </td>
+          </tr>
+
+          <!-- Récapitulatif -->
+          <tr>
+            <td style="padding:26px 34px 0;">
+              <h2 style="margin:0 0 6px;font-size:16px;color:#071A3A;">${escapeHtml(L.recapTitle)}</h2>
+              <p style="margin:0 0 14px;font-size:13px;color:#8A96A8;">${escapeHtml(typeLabel)}</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-size:15px;">${rows}</table>
+            </td>
+          </tr>
+
+          <!-- Contact -->
+          <tr>
+            <td style="padding:26px 34px 0;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#EAF3FC;border-radius:12px;">
+                <tr>
+                  <td style="padding:18px 20px;">
+                    <p style="margin:0 0 10px;font-size:14px;font-weight:700;color:#071A3A;">${escapeHtml(L.closingTitle)}</p>
+                    <p style="margin:0;font-size:14px;line-height:1.9;color:#172033;">
+                      Telegram : <a href="${TELEGRAM_URL}" style="color:#0879D1;text-decoration:none;font-weight:600;">${escapeHtml(TELEGRAM_LABEL)}</a><br />
+                      Facebook : <a href="${FACEBOOK_URL}" style="color:#0879D1;text-decoration:none;font-weight:600;">BIFAUMA</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signature -->
+          <tr>
+            <td style="padding:26px 34px 30px;">
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#55637A;">${L.signature.map(escapeHtml).join('<br />')}</p>
+            </td>
+          </tr>
+
+          <!-- Pied de page -->
+          <tr>
+            <td style="background:#F6F8FB;border-top:1px solid #E4E8EF;padding:18px 34px;">
+              <p style="margin:0;font-size:12px;line-height:1.6;color:#8A96A8;">
+                ${escapeHtml(L.footerNote)}<br />
+                &copy; BIFAUMA &middot; bifauma-investieren.com
+              </p>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>`;
 
   const plain = [
-    'BIFAUMA',
+    'B I F A U M A',
+    '------------------------------',
+    `[${L.badge}]`,
     '',
     greeting,
     '',
@@ -361,6 +451,9 @@ function buildConfirmation(type, fields, lang) {
     'Facebook : BIFAUMA',
     '',
     ...L.signature,
+    '',
+    '------------------------------',
+    L.footerNote,
   ].join('\n');
 
   const subject = `BIFAUMA — ${L.subjectPrefix} : ${typeLabel}`.slice(0, 180);
