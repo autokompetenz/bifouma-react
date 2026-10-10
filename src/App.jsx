@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import PageTransition from './components/PageTransition.jsx';
 import { useI18n } from './i18n.jsx';
+import { projects } from './data/projects.js';
 import Home from './pages/Home.jsx';
 import About from './pages/About.jsx';
 import Service from './pages/Service.jsx';
@@ -17,9 +18,22 @@ import NotFound from './pages/NotFound.jsx';
 
 function ScrollAndTitle() {
   const { pathname, hash } = useLocation();
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   useEffect(() => {
-    if (t('meta.title')) document.title = t('meta.title');
+    const seg = pathname.split('/').filter(Boolean);
+    const root = seg[0] || 'home';
+    let title;
+    if (root === 'home') {
+      title = t('meta.title');
+    } else if (root === 'projects' && seg[1]) {
+      const project = projects.find((p) => p.slug === seg[1]);
+      const content = project && (project.content[lang] || project.content.fr);
+      title = content ? `${content.title} — BIFAUMA` : t('meta.routes.projects');
+    } else {
+      title = t(`meta.routes.${root}`);
+    }
+    if (title && title !== `meta.routes.${root}`) document.title = title;
+
     if (hash) {
       const el = document.querySelector(hash);
       if (el) {
@@ -28,7 +42,7 @@ function ScrollAndTitle() {
       }
     }
     window.scrollTo({ top: 0 });
-  }, [pathname, hash, t]);
+  }, [pathname, hash, t, lang]);
   return null;
 }
 

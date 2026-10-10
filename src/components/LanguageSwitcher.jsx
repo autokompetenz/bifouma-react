@@ -3,9 +3,9 @@ import { useI18n, LANGS } from '../i18n.jsx';
 const SHORT = { fr: 'FR', de: 'DE', fi: 'FI', sr: 'SR' };
 
 export default function LanguageSwitcher({ compact = false }) {
-  const { lang, setLang } = useI18n();
+  const { t, lang, setLang } = useI18n();
   return (
-    <div className="lang-switch" role="group" aria-label="Language">
+    <div className="lang-switch" role="group" aria-label={t('misc.language')}>
       {LANGS.map((l) => (
         <button
           key={l.code}

@@ -1,10 +1,11 @@
-import { projects } from '../data/projects.js';
+import { projects, sectorLabels } from '../data/projects.js';
 import { useI18n } from '../i18n.jsx';
 
 export default function HeroVisual() {
   const { t, lang } = useI18n();
   const p = projects[0];
   const content = p.content[lang] || p.content.fr;
+  const c = (obj) => obj[lang] || obj.fr;
   const steps = t('loan.steps');
   const facts = [
     { v: t('loanCta.answer'), l: t('loanCta.answerLabel') },
@@ -13,22 +14,14 @@ export default function HeroVisual() {
   ];
 
   return (
-    <div className="hero-visual" aria-hidden="true">
+    <div className="hero-visual">
       <div className="hero-visual__card">
         <div className="hero-visual__top">
           <span className="hero-visual__label">{t('projects.title')}</span>
-          <span className="hero-visual__pill">{p.progress}%</span>
+          <span className="hero-visual__pill">{c(sectorLabels[p.sector])}</span>
         </div>
-        <div className="hero-visual__amount">
-          <strong>{p.raised.toLocaleString('de-DE')} €</strong>
-          <span>/ {p.target.toLocaleString('de-DE')} €</span>
-        </div>
-        <p className="hero-visual__title text-truncate" style={{ marginBottom: 14, fontSize: 15, color: 'rgba(255,255,255,0.85)' }}>
-          {content.title}
-        </p>
-        <div className="hero-visual__bar">
-          <span style={{ width: `${p.progress}%` }} />
-        </div>
+        <h3 className="hero-visual__title">{content.title}</h3>
+        <p className="hero-visual__desc">{content.intro}</p>
         <div className="hero-visual__steps">
           {steps.map((s, i) => (
             <div className="hero-visual__step" key={s}>
@@ -38,7 +31,7 @@ export default function HeroVisual() {
           ))}
         </div>
       </div>
-      <div className="hero-visual__float">
+      <div className="hero-visual__float" aria-hidden="true">
         {facts.map((f) => (
           <div key={f.l}>
             <strong>{f.v}</strong>

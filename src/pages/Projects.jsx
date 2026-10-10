@@ -33,18 +33,22 @@ export default function Projects() {
       <section className="section-lg">
         <div className="container">
 
-        <div className="d-flex flex-wrap justify-content-center align-items-center gap-2 mb-4" style={{ gap: 10 }}>
-          <div>
-            <span className="mr-2">{t('projects.filters.sector')}:</span>
+        <p className="illustrative-note" role="note">
+          <i className="ti-info-alt mr-2" aria-hidden="true" />
+          {t('projects.illustrativeNote')}
+        </p>
+
+        <div className="filter-row">
+          <div className="filter-group">
+            <span className="filter-group-label">{t('projects.filters.sector')}</span>
             {sectors.map((s) => (
               <button key={s} className={`filter-pill ${sector === s ? 'active' : ''}`} onClick={() => setSector(s)}>
                 {s === 'all' ? t('projects.filters.all') : c(sectorLabels[s])}
               </button>
             ))}
           </div>
-          <span className="mx-2">·</span>
-          <div>
-            <span className="mr-2">{t('projects.filters.country')}:</span>
+          <div className="filter-group">
+            <span className="filter-group-label">{t('projects.filters.country')}</span>
             {countries.map((co) => (
               <button key={co} className={`filter-pill ${country === co ? 'active' : ''}`} onClick={() => setCountry(co)}>
                 {co === 'all' ? t('projects.filters.all') : c(countryLabels[co])}
@@ -55,7 +59,7 @@ export default function Projects() {
 
         <div className="row">
           {list.map((p) => {
-            const content = p.content[lang] || p.content.de;
+            const content = p.content[lang] || p.content.fr;
             return (
               <div className="col-md-6 col-lg-4 mb-5" key={p.slug}>
                 <div className="card project-card h-100">
@@ -63,8 +67,8 @@ export default function Projects() {
                   <div className="card-body p-4 d-flex flex-column">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <span className="badge badge-primary">{c(sectorLabels[p.sector])}</span>
-                      <span className="badge" style={{ background: '#EEF2F8', color: 'var(--bf-muted)' }}>
-                        <i className="ti-pin mr-1" />{c(countryLabels[p.country])}
+                      <span className="badge badge-soft">
+                        <i className="ti-pin mr-1" aria-hidden="true" />{c(countryLabels[p.country])}
                       </span>
                     </div>
                     <h3 className="h5 mb-1">{content.title}</h3>
@@ -75,6 +79,9 @@ export default function Projects() {
               </div>
             );
           })}
+          {list.length === 0 && (
+            <div className="col-12 text-center text-muted py-5">{t('projects.filters.empty')}</div>
+          )}
         </div>
 
         <div className="row mt-5">

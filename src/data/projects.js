@@ -3,12 +3,6 @@ export const projects = [
     slug: 'green-energy-grid',
     sector: 'energy',
     country: 'de',
-    risk: 'low',
-    target: 250000,
-    raised: 162000,
-    durationMonths: 36,
-    returnRate: 8,
-    progress: 65,
     image: '/assets/images/product/product-1.jpg',
     content: {
       de: {
@@ -53,12 +47,6 @@ export const projects = [
     slug: 'logistics-hub',
     sector: 'realestate',
     country: 'fi',
-    risk: 'medium',
-    target: 400000,
-    raised: 210000,
-    durationMonths: 48,
-    returnRate: 11,
-    progress: 52,
     image: '/assets/images/product/product-2.jpg',
     content: {
       de: {
@@ -103,12 +91,6 @@ export const projects = [
     slug: 'agrotech-serbia',
     sector: 'agro',
     country: 'sr',
-    risk: 'medium',
-    target: 150000,
-    raised: 98000,
-    durationMonths: 24,
-    returnRate: 14,
-    progress: 66,
     image: '/assets/images/product/product-3.jpg',
     content: {
       de: {
@@ -153,12 +135,6 @@ export const projects = [
     slug: 'urbandevelopment-belgrade',
     sector: 'realestate',
     country: 'sr',
-    risk: 'high',
-    target: 600000,
-    raised: 240000,
-    durationMonths: 60,
-    returnRate: 16,
-    progress: 40,
     image: '/assets/images/product/product-4.jpg',
     content: {
       de: {
@@ -203,12 +179,6 @@ export const projects = [
     slug: 'fish-farm-serbia',
     sector: 'agro',
     country: 'sr',
-    risk: 'low',
-    target: 85000,
-    raised: 72000,
-    durationMonths: 18,
-    returnRate: 10,
-    progress: 85,
     image: '/assets/images/product/product-5.jpg',
     content: {
       de: {
@@ -253,12 +223,6 @@ export const projects = [
     slug: 'retail-tampere',
     sector: 'retail',
     country: 'fi',
-    risk: 'low',
-    target: 120000,
-    raised: 95000,
-    durationMonths: 30,
-    returnRate: 9,
-    progress: 79,
     image: '/assets/images/product/product-6.jpg',
     content: {
       de: {

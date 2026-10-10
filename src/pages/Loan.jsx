@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useI18n } from '../i18n.jsx';
+import { sendForm, describeSendError, filesTooLarge, SendError } from '../lib/sendForm.js';
 
 const emptyForm = {
   amount: '',
@@ -10,27 +11,29 @@ const emptyForm = {
   name: '',
   contact: '',
   files: [],
+  consent: false,
 };
 
 export default function Loan() {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const [step, setStep] = useState(1);
   const [form, setForm] = useState(emptyForm);
   const [errors, setErrors] = useState({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [errorMsg, setErrorMsg] = useState('');
   const f = t('loan.form');
   const steps = t('loan.steps');
 
   const set = (key) => (e) => {
     const value =
       e.target.type === 'checkbox' ? e.target.checked
-      : e.target.type === 'file' ? Array.from(e.target.files).map((x) => x.name)
+      : e.target.type === 'file' ? Array.from(e.target.files)
       : e.target.value;
     setForm((prev) => ({ ...prev, [key]: value }));
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
-  const requiredByStep = { 1: ['amount', 'duration', 'purpose'], 2: [], 3: ['name', 'contact'] };
+  const requiredByStep = { 1: ['amount', 'duration', 'purpose'], 3: ['name', 'contact'] };
 
   const validate = (n) => {
     const errs = {};
@@ -51,9 +54,55 @@ export default function Loan() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
   const go = (n) => {
+    if (status === 'sending') return;
     if (n < step || validate(step)) {
       setStep(n);
       setErrors({});
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  const reset = () => {
+    setForm(emptyForm);
+    setStatus('idle');
+    setErrorMsg('');
+    setStep(1);
+    setErrors({});
+    window.scrollTo({ top: 0 });
+  };
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (!form.consent) return;
+    if (filesTooLarge(form.files)) {
+      setErrorMsg(t('forms.tooLarge'));
+      setStatus('error');
+      return;
+    }
+    setStatus('sending');
+    setErrorMsg('');
+    try {
+      await sendForm(
+        'loan',
+        {
+          amount: form.amount,
+          duration: form.duration,
+          purpose: form.purpose,
+          income: form.income,
+          situation: form.situation,
+          name: form.name,
+          contact: form.contact,
+          consent: form.consent ? 'Oui' : '',
+        },
+        form.files,
+        lang
+      );
+      setStatus('sent');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      const code = err instanceof SendError ? err.code : 'send_failed';
+      setErrorMsg(describeSendError(code, t));
+      setStatus('error');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -68,6 +117,8 @@ export default function Loan() {
     { step: 3, title: steps[2], rows: [['name', f.name], ['contact', f.contact], ['file', f.file]] },
   ];
 
+  const sending = status === 'sending';
+
   return (
     <section className="section-lg loan page-hero">
       <div className="page-hero-head">
@@ -80,22 +131,13 @@ export default function Loan() {
       </div>
       <div className="container mt-5">
 
-        {sent ? (
+        {status === 'sent' ? (
           <div className="row justify-content-center mt-5">
             <div className="col-lg-8 text-center">
               <div className="rounded bg-white p-5 shadow-primary">
-                <i className="ti-check-box" style={{ fontSize: 48, color: 'var(--bf-teal)' }} />
+                <i className="ti-check-box confirm-icon" aria-hidden="true" />
                 <h3 className="mt-3 mb-2">{t('loan.form.success')}</h3>
-                <button
-                  type="button"
-                  className="btn btn-outline-dark mt-4"
-                  onClick={() => {
-                    setForm(emptyForm);
-                    setSent(false);
-                    setStep(1);
-                    setErrors({});
-                  }}
-                >
+                <button type="button" className="btn btn-outline-dark mt-4" onClick={reset}>
                   {t('loan.newRequest')}
                 </button>
               </div>
@@ -109,7 +151,7 @@ export default function Loan() {
                 const cls = n === step ? 'active' : n < step ? 'done' : '';
                 return (
                   <li key={label} className={`loan-step ${cls}`}>
-                    <button type="button" className="loan-step-btn" onClick={() => go(n)} disabled={n > step + 1}>
+                    <button type="button" className="loan-step-btn" onClick={() => go(n)} disabled={sending || n > step + 1}>
                       <span className="loan-step-num">{n < step ? <i className="ti-check" /> : n}</span>
                     </button>
                     <span className="loan-step-label">{label}</span>
@@ -139,26 +181,34 @@ export default function Loan() {
 
               <div className="col-lg-7 order-1 order-lg-2 mb-4">
                 <div className="rounded bg-white p-4 shadow-primary">
+                  {status === 'error' && (
+                    <div className="bif-error mb-3" role="alert">
+                      {errorMsg}
+                      <span className="d-block text-muted mt-1">
+                        Telegram: +49 174 594 4264 · Facebook: BIFAUMA
+                      </span>
+                    </div>
+                  )}
                   {step === 1 && (
                     <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
-                          <label>{f.amount} *</label>
-                          <input className={inputCls('amount')} value={form.amount} onChange={set('amount')} required />
-                          {errors.amount && <p className="form-error">{errors.amount}</p>}
+                          <label htmlFor="loan-amount">{f.amount} *</label>
+                          <input id="loan-amount" type="text" inputMode="numeric" autoComplete="off" className={inputCls('amount')} value={form.amount} onChange={set('amount')} required aria-invalid={!!errors.amount} aria-describedby={errors.amount ? 'loan-amount-error' : undefined} />
+                          {errors.amount && <p className="form-error" id="loan-amount-error" role="alert">{errors.amount}</p>}
                         </div>
                         <div className="col-md-6">
-                          <label>{f.duration} *</label>
-                          <input className={inputCls('duration')} value={form.duration} onChange={set('duration')} required />
-                          {errors.duration && <p className="form-error">{errors.duration}</p>}
+                          <label htmlFor="loan-duration">{f.duration} *</label>
+                          <input id="loan-duration" type="text" inputMode="numeric" autoComplete="off" className={inputCls('duration')} value={form.duration} onChange={set('duration')} required aria-invalid={!!errors.duration} aria-describedby={errors.duration ? 'loan-duration-error' : undefined} />
+                          {errors.duration && <p className="form-error" id="loan-duration-error" role="alert">{errors.duration}</p>}
                         </div>
                         <div className="col-12">
-                          <label>{f.purpose} *</label>
-                          <input className={inputCls('purpose')} value={form.purpose} onChange={set('purpose')} required />
-                          {errors.purpose && <p className="form-error">{errors.purpose}</p>}
+                          <label htmlFor="loan-purpose">{f.purpose} *</label>
+                          <input id="loan-purpose" type="text" className={inputCls('purpose')} value={form.purpose} onChange={set('purpose')} required aria-invalid={!!errors.purpose} aria-describedby={errors.purpose ? 'loan-purpose-error' : undefined} />
+                          {errors.purpose && <p className="form-error" id="loan-purpose-error" role="alert">{errors.purpose}</p>}
                         </div>
                         <div className="col-12 text-right">
-                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
@@ -168,18 +218,18 @@ export default function Loan() {
                     <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
-                          <label>{f.income}</label>
-                          <input className={inputCls('income')} value={form.income} onChange={set('income')} />
+                          <label htmlFor="loan-income">{f.income}</label>
+                          <input id="loan-income" type="text" inputMode="numeric" autoComplete="off" className={inputCls('income')} value={form.income} onChange={set('income')} />
                         </div>
                         <div className="col-12">
-                          <label>{f.situation}</label>
-                          <textarea className={inputCls('situation')} value={form.situation} onChange={set('situation')} />
+                          <label htmlFor="loan-situation">{f.situation}</label>
+                          <textarea id="loan-situation" className={inputCls('situation')} value={form.situation} onChange={set('situation')} />
                         </div>
                         <div className="col-md-6 col-12">
                           <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
                         </div>
                         <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
@@ -189,19 +239,19 @@ export default function Loan() {
                     <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
-                          <label>{f.name} *</label>
-                          <input className={inputCls('name')} value={form.name} onChange={set('name')} required />
-                          {errors.name && <p className="form-error">{errors.name}</p>}
+                          <label htmlFor="loan-name">{f.name} *</label>
+                          <input id="loan-name" type="text" autoComplete="name" className={inputCls('name')} value={form.name} onChange={set('name')} required aria-invalid={!!errors.name} aria-describedby={errors.name ? 'loan-name-error' : undefined} />
+                          {errors.name && <p className="form-error" id="loan-name-error" role="alert">{errors.name}</p>}
                         </div>
                         <div className="col-md-6">
-                          <label>{f.contact} *</label>
-                          <input className={inputCls('contact')} value={form.contact} onChange={set('contact')} required />
-                          {errors.contact && <p className="form-error">{errors.contact}</p>}
+                          <label htmlFor="loan-contact">{f.contact} *</label>
+                          <input id="loan-contact" type="text" autoComplete="email" className={inputCls('contact')} value={form.contact} onChange={set('contact')} required aria-invalid={!!errors.contact} aria-describedby={errors.contact ? 'loan-contact-error' : undefined} />
+                          {errors.contact && <p className="form-error" id="loan-contact-error" role="alert">{errors.contact}</p>}
                         </div>
                         <div className="col-12">
-                          <label>{f.file}</label>
-                          <input type="file" className="form-control mb-1" multiple accept=".pdf" onChange={set('files')} />
-                          <p className="bif-file-note">
+                          <label htmlFor="loan-file">{f.file}</label>
+                          <input id="loan-file" type="file" className="form-control mb-1" multiple accept=".pdf" onChange={set('files')} aria-describedby="loan-file-note" />
+                          <p className="bif-file-note" id="loan-file-note">
                             {form.files.length > 0 ? `${form.files.length} ${t('loan.filesAdded')}` : t('loan.fileNone')}
                           </p>
                         </div>
@@ -209,21 +259,21 @@ export default function Loan() {
                           <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
                         </div>
                         <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary ">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
                         </div>
                       </div>
                     </form>
                   )}
 
                   {step === 4 && (
-                    <form className="bif-form" onSubmit={(e) => { e.preventDefault(); setSent(true); window.scrollTo({ top: 0, behavior: 'smooth' }); }} noValidate>
+                    <form className="bif-form" onSubmit={submit} noValidate>
                       <h5 className="mb-1">{t('loan.recapTitle')}</h5>
                       <p className="text-muted mb-4">{t('loan.recapHint')}</p>
                       {groups.map((g) => (
                         <div className="recap-group" key={g.step}>
                           <div className="d-flex justify-content-between align-items-center mb-1">
                             <h6 className="mb-0">{g.title}</h6>
-                            <button type="button" className="recap-edit" onClick={() => go(g.step)}><i className="ti-pencil mr-1" />{t('loan.edit')}</button>
+                            <button type="button" className="recap-edit" onClick={() => go(g.step)} disabled={sending}><i className="ti-pencil mr-1" />{t('loan.edit')}</button>
                           </div>
                           <ul className="recap-list">
                             {g.rows.map(([k, label]) => (
@@ -239,14 +289,14 @@ export default function Loan() {
                           </ul>
                         </div>
                       ))}
-                      <label className="d-flex align-items-start">
-                        <input type="checkbox" className="mr-2" required checked={form.consent} onChange={set('consent')} />
+                      <label className="d-flex align-items-start" htmlFor="loan-consent">
+                        <input id="loan-consent" type="checkbox" className="mr-2" required checked={form.consent} onChange={set('consent')} disabled={sending} />
                         {f.consent}
                       </label>
                       <div className="d-flex justify-content-between mt-3">
-                        <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
-                        <button type="submit" className="btn btn-primary  btn-lg" disabled={!form.consent}>
-                          <i className="ti-check mr-2" />{t('loan.confirm')}
+                        <button type="button" className="btn btn-outline-dark" onClick={back} disabled={sending}><i className="ti-arrow-left" /> {t('loan.back')}</button>
+                        <button type="submit" className="btn btn-primary btn-lg" disabled={!form.consent || sending}>
+                          {sending ? <><i className="ti-reload mr-2" />{t('forms.sending')}</> : <><i className="ti-check mr-2" />{t('loan.confirm')}</>}
                         </button>
                       </div>
                     </form>

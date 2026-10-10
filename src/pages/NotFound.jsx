@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="page-hero">
       <div className="page-hero-head">
         <div className="container text-center">
-          <h1 className="section-title mb-0" style={{ fontSize: 72 }}>404</h1>
+          <h1 className="notfound-code mb-0">404</h1>
           <h2 className="section-title mb-0">{t('notFound.title')}</h2>
         </div>
       </div>

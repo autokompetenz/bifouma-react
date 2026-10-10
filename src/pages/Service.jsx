@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import Reveal from '../components/Reveal.jsx';
-
-const ICONS = ['ti-wallet', 'ti-briefcase', 'ti-layers-alt', 'ti-headphone-alt', 'ti-search', 'ti-time'];
+import { SOLUTION_ICONS } from '../data/icons.js';
 
 export default function Service() {
   const { t } = useI18n();
@@ -26,7 +25,7 @@ export default function Service() {
               <div className="col-sm-6 col-lg-4 mb-4" key={s.title}>
                 <Reveal as="div" delay={i * 70} className="h-100">
                   <div className="solution-card">
-                    <i className={`${ICONS[i]} round-icon blue`} aria-hidden="true" />
+                    <i className={`${SOLUTION_ICONS[i]} round-icon blue`} aria-hidden="true" />
                     <h4>{s.title}</h4>
                     <p>{s.desc}</p>
                   </div>
@@ -34,10 +33,9 @@ export default function Service() {
               </div>
             ))}
           </div>
-          <div className="text-center mt-4">
-            <Link to="/loan" className="btn btn-primary btn-lg mr-2 mb-2">{t('misc.loan')}</Link>
-            <Link to="/submit" className="btn btn-secondary btn-lg mr-2 mb-2">{t('misc.submitProject')}</Link>
-            <Link to="/projects" className="btn btn-outline-dark btn-lg mb-2">{t('misc.invest')}</Link>
+          <div className="d-flex flex-wrap justify-content-center mt-4">
+            <Link to="/loan" className="btn btn-primary btn-lg mr-2 mb-2">{t('nav.cta')}</Link>
+            <Link to="/submit" className="btn btn-secondary btn-lg mb-2">{t('misc.submitProject')}</Link>
           </div>
         </div>
       </section>

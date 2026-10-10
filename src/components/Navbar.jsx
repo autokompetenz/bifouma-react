@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import LanguageSwitcher from './LanguageSwitcher.jsx';
@@ -8,7 +8,10 @@ export default function Navbar() {
   const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const onDark = location.pathname === '/' && !scrolled && !open;
+  const togglerRef = useRef(null);
+  // Toutes les pages ont un en-tête bleu nuit en haut : le header doit être
+  // en version claire tant qu'on n'a pas scrollé (sinon texte navy sur navy).
+  const solid = scrolled || open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -27,18 +30,31 @@ export default function Navbar() {
     setOpen(false);
   }, [location.pathname]);
 
+  // Fermer au clavier (Échap) et rendre le focus au bouton
+  useEffect(() => {
+    if (!open) return undefined;
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        togglerRef.current?.focus();
+      }
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  // Navigation principale resserrée : une seule destination par besoin.
   const links = [
     { to: '/', label: t('nav.home'), end: true },
-    { to: '/#solutions', label: t('nav.features'), end: true },
-    { to: '/#how', label: t('nav.comment'), end: true },
-    { to: '/about', label: t('nav.about') },
+    { to: '/service', label: t('nav.service') },
     { to: '/projects', label: t('nav.projects') },
+    { to: '/about', label: t('nav.about') },
     { to: '/contact', label: t('nav.contact') },
   ];
 
   return (
     <header
-      className={`fixed-top navigation ${scrolled ? 'nav-bg' : ''} ${onDark ? 'nav-on-dark' : ''}`}
+      className={`fixed-top navigation ${solid ? 'nav-bg' : ''} ${!solid ? 'nav-on-dark' : ''}`}
     >
       <div className="container">
         <nav className="navbar navbar-expand-lg px-0" aria-label={t('nav.menu')}>
@@ -46,11 +62,14 @@ export default function Navbar() {
             <span className="bif-wordmark">BIFAUMA</span>
           </Link>
           <div className="d-flex align-items-center order-lg-3 ml-auto">
-            <LanguageSwitcher compact />
+            <div className="bif-header-lang d-none d-lg-block">
+              <LanguageSwitcher compact />
+            </div>
             <button
+              ref={togglerRef}
               className="navbar-toggler border-0 ml-2"
               type="button"
-              aria-label={open ? t('nav.menu') : t('nav.menu')}
+              aria-label={t('nav.menu')}
               aria-expanded={open}
               aria-controls="bifMenu"
               onClick={() => setOpen((o) => !o)}
@@ -61,23 +80,20 @@ export default function Navbar() {
           <div id="bifMenu" className={`collapse navbar-collapse ${open ? 'show' : ''}`}>
             <ul className="navbar-nav ml-auto">
               {links.map((l) => (
-                <li className="nav-item" key={l.label}>
-                  {l.to.includes('#') ? (
-                    <Link className="nav-link" to={l.to}>
-                      {l.label}
-                    </Link>
-                  ) : (
-                    <NavLink className="nav-link" to={l.to} end={l.end}>
-                      {l.label}
-                    </NavLink>
-                  )}
+                <li className="nav-item" key={l.to}>
+                  <NavLink className="nav-link" to={l.to} end={l.end}>
+                    {l.label}
+                  </NavLink>
                 </li>
               ))}
             </ul>
             <div className="d-flex justify-content-center ml-lg-3 my-2 my-lg-0">
-              <Link className="btn btn-primary" to="/loan">
+              <Link className="btn btn-primary" to="/loan" onClick={() => setOpen(false)}>
                 {t('nav.cta')}
               </Link>
+            </div>
+            <div className="d-lg-none mt-3 d-flex justify-content-center">
+              <LanguageSwitcher />
             </div>
           </div>
         </nav>

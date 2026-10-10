@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { useI18n } from '../i18n.jsx';
+import { sendForm, describeSendError, SendError } from '../lib/sendForm.js';
+
+const empty = { name: '', email: '', subject: '', message: '' };
 
 export default function Contact() {
-  const { t } = useI18n();
-  const [sent, setSent] = useState(false);
+  const { t, lang } = useI18n();
+  const [form, setForm] = useState(empty);
+  const [status, setStatus] = useState('idle'); // idle | sending | success | error
+  const [errorMsg, setErrorMsg] = useState('');
   const cards = t('contact.infoCards');
   const f = t('contact.form');
 
@@ -14,6 +19,23 @@ export default function Contact() {
   const emailId = 'ct-email';
   const subjectId = 'ct-subject';
   const messageId = 'ct-message';
+
+  const set = (key) => (e) => setForm((prev) => ({ ...prev, [key]: e.target.value }));
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg('');
+    try {
+      await sendForm('contact', form, [], lang);
+      setStatus('success');
+      setForm(empty);
+    } catch (err) {
+      const code = err instanceof SendError ? err.code : 'send_failed';
+      setErrorMsg(describeSendError(code, t));
+      setStatus('error');
+    }
+  };
 
   return (
     <div className="contact page-hero">
@@ -31,25 +53,29 @@ export default function Contact() {
           <div className="contact-bg p-5 rounded mb-5">
             <div className="row">
               <div className="col-lg-7 mb-4 mb-lg-0">
-                {sent ? (
-                  <p className="bif-success">{t('contact.form.success')}</p>
+                {status === 'success' ? (
+                  <p className="bif-success" role="status">{t('contact.form.success')}</p>
                 ) : (
-                  <form
-                    className="bif-form"
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setSent(true);
-                    }}
-                  >
+                  <form className="bif-form" onSubmit={submit} noValidate>
+                    {status === 'error' && (
+                      <div className="bif-error mb-3" role="alert">
+                        {errorMsg}
+                        <span className="d-block text-muted mt-1">
+                          Telegram: <a href={telegram.url} target="_blank" rel="noreferrer">{telegram.label}</a>
+                        </span>
+                      </div>
+                    )}
                     <label htmlFor={nameId}>{f.name} *</label>
-                    <input id={nameId} type="text" className="form-control mb-3" name="name" required autoComplete="name" />
+                    <input id={nameId} type="text" className="form-control mb-3" value={form.name} onChange={set('name')} required autoComplete="name" disabled={status === 'sending'} />
                     <label htmlFor={emailId}>{f.email} *</label>
-                    <input id={emailId} type="email" className="form-control mb-3" name="mail" required autoComplete="email" />
+                    <input id={emailId} type="email" className="form-control mb-3" value={form.email} onChange={set('email')} required autoComplete="email" disabled={status === 'sending'} />
                     <label htmlFor={subjectId}>{f.subject} *</label>
-                    <input id={subjectId} type="text" className="form-control mb-3" name="subject" required />
+                    <input id={subjectId} type="text" className="form-control mb-3" value={form.subject} onChange={set('subject')} required disabled={status === 'sending'} />
                     <label htmlFor={messageId}>{f.message} *</label>
-                    <textarea id={messageId} name="message" className="form-control mb-3" required />
-                    <button type="submit" className="btn btn-primary">{f.send}</button>
+                    <textarea id={messageId} name="message" className="form-control mb-3" value={form.message} onChange={set('message')} required disabled={status === 'sending'} />
+                    <button type="submit" className="btn btn-primary" disabled={status === 'sending'}>
+                      {status === 'sending' ? t('forms.sending') : f.send}
+                    </button>
                   </form>
                 )}
               </div>
@@ -86,7 +112,8 @@ export default function Contact() {
             {cards.map((c) => (
               <div className="col-lg-4 col-sm-6 mb-4 mb-lg-0" key={c.title}>
                 <div className="info-card">
-                  <h3><i className="ti-shield round-icon blue mr-2" /> {c.title}</h3>
+                  <i className="ti-shield info-card__icon" aria-hidden="true" />
+                  <h3>{c.title}</h3>
                   <p>{c.desc}</p>
                 </div>
               </div>

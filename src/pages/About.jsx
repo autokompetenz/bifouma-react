@@ -3,6 +3,7 @@ import { useI18n } from '../i18n.jsx';
 import AnimatedCounter from '../components/AnimatedCounter.jsx';
 import Reveal from '../components/Reveal.jsx';
 import CoverageStrip from '../components/CoverageStrip.jsx';
+import { SOLUTION_ICONS } from '../data/icons.js';
 
 export default function About() {
   const { t } = useI18n();
@@ -26,7 +27,10 @@ export default function About() {
         <div className="container">
           <div className="row align-items-center">
             <div className="col-lg-6 mb-4 mb-lg-0">
-              <img className="about-photo" src="/assets/images/about.jpg" alt="" loading="lazy" />
+              <picture className="about-picture">
+                <source srcSet="/assets/images/about.webp" type="image/webp" />
+                <img className="about-photo" src="/assets/images/about.jpg" alt="" loading="lazy" decoding="async" />
+              </picture>
             </div>
             <div className="col-lg-6">
               <h2 className="section-title">{t('about.historyTitle')}</h2>
@@ -38,7 +42,7 @@ export default function About() {
       </section>
 
       {/* Chiffres clés */}
-      <section className="section" style={{ borderTop: '1px solid var(--bf-line)', borderBottom: '1px solid var(--bf-line)' }}>
+      <section className="section section-white">
         <div className="container text-center">
           <h2 className="section-title mb-4">{t('about.statsTitle')}</h2>
           <div className="stat-grid">
@@ -59,6 +63,7 @@ export default function About() {
               );
             })}
           </div>
+          <p className="stat-strip__note mt-3">{t('home.statsNote')}</p>
         </div>
       </section>
 
@@ -83,7 +88,7 @@ export default function About() {
       </section>
 
       {/* Services */}
-      <section className="section" style={{ borderTop: '1px solid var(--bf-line)' }}>
+      <section className="section section-white-top">
         <div className="container">
           <h2 className="section-title text-center mb-4">{t('about.productTitle')}</h2>
           <p className="text-center mb-5 mx-auto" style={{ maxWidth: 640 }}>{t('service.subtitle')}</p>
@@ -92,7 +97,7 @@ export default function About() {
               <div className="col-sm-6 col-lg-3 mb-4" key={s.title}>
                 <Reveal as="div" delay={i * 70} className="h-100">
                   <div className="solution-card">
-                    <i className="ti-layers-alt round-icon blue" aria-hidden="true" />
+                    <i className={`${SOLUTION_ICONS[i]} round-icon blue`} aria-hidden="true" />
                     <h4>{s.title}</h4>
                     <p>{s.desc}</p>
                   </div>
@@ -101,9 +106,8 @@ export default function About() {
             ))}
           </div>
           <div className="d-flex flex-wrap justify-content-center mt-3">
-            <Link to="/loan" className="btn btn-primary mr-2 mb-2">{t('misc.loan')}</Link>
-            <Link to="/submit" className="btn btn-secondary mr-2 mb-2">{t('misc.submitProject')}</Link>
-            <Link to="/service" className="btn btn-outline-dark mb-2">{t('misc.services')}</Link>
+            <Link to="/loan" className="btn btn-primary mr-2 mb-2">{t('nav.cta')}</Link>
+            <Link to="/submit" className="btn btn-secondary mb-2">{t('misc.submitProject')}</Link>
           </div>
         </div>
       </section>

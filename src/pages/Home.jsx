@@ -2,43 +2,65 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import Reveal from '../components/Reveal.jsx';
-import AnimatedCounter from '../components/AnimatedCounter.jsx';
 import HeroVisual from '../components/HeroVisual.jsx';
 import BrandVisual from '../components/BrandVisual.jsx';
 import CoverageStrip from '../components/CoverageStrip.jsx';
 import ProjectVisual from '../components/ProjectVisual.jsx';
 import { projects, sectorLabels, countryLabels } from '../data/projects.js';
+import { SOLUTION_ICONS, FEATURE_ICONS } from '../data/icons.js';
+import { sendForm, describeSendError, SendError } from '../lib/sendForm.js';
 
 function Newsletter() {
   const { t } = useI18n();
-  const [sent, setSent] = useState(false);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const subscribe = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    setErrorMsg('');
+    try {
+      await sendForm('newsletter', { email });
+      setStatus('sent');
+      setEmail('');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch (err) {
+      const code = err instanceof SendError ? err.code : 'send_failed';
+      setErrorMsg(describeSendError(code, t));
+      setStatus('error');
+    }
+  };
+
   return (
-    <section className="newsletter section">
+    <section className="newsletter section" id="newsletter">
       <div className="container">
         <div className="text-center">
           <h2>{t('newsletter.title')}</h2>
           <p className="newsletter-sub">{t('newsletter.subtitle')}</p>
-          {sent ? (
+          {status === 'sent' ? (
             <p className="bif-success mx-auto" style={{ maxWidth: 420 }}>
               {t('newsletter.success')}
             </p>
           ) : (
-            <form
-              className="newsletter-form-wrap"
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-            >
+            <form className="newsletter-form-wrap" onSubmit={subscribe}>
+              {status === 'error' && (
+                <p className="bif-error mx-auto mb-3" style={{ maxWidth: 460 }} role="alert">{errorMsg}</p>
+              )}
               <label className="sr-only" htmlFor="nl-email">{t('newsletter.placeholder')}</label>
               <input
                 id="nl-email"
                 type="email"
                 className="newsletter-form"
                 placeholder={t('newsletter.placeholder')}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={status === 'sending'}
               />
-              <button type="submit" className="btn btn-primary newsletter-btn">{t('newsletter.btn')}</button>
+              <button type="submit" className="btn btn-primary newsletter-btn" disabled={status === 'sending'}>
+                {status === 'sending' ? t('forms.sending') : t('newsletter.btn')}
+              </button>
             </form>
           )}
         </div>
@@ -51,29 +73,21 @@ function StatsRow() {
   const { t } = useI18n();
   const stats = t('home.stats');
   return (
-    <div className="stat-grid">
-      {stats.map((s, i) => {
-        const m = /^(\d+)(.*)$/.exec(s.value);
-        const animatable = m && m[1] !== '0' && !s.value.includes('/');
-        return (
-          <Reveal key={s.label} delay={i * 100} as="div" className="stat-cell">
-            <div className="stat-value">
-              {animatable ? (
-                <AnimatedCounter end={Number(m[1])} suffix={m[2].trim() ? ` ${m[2].trim()}` : ''} />
-              ) : (
-                s.value
-              )}
-            </div>
-            <div className="stat-label">{s.label}</div>
-          </Reveal>
-        );
-      })}
+    <div className="stat-strip">
+      <div className="container">
+        <ul className="stat-strip__list">
+          {stats.map((s) => (
+            <li className="stat-strip__item" key={s.label}>
+              <strong>{s.value}</strong>
+              <span>{s.label}</span>
+            </li>
+          ))}
+        </ul>
+        <p className="stat-strip__note">{t('home.statsNote')}</p>
+      </div>
     </div>
   );
 }
-
-const FEATURE_ICONS = ['ti-check-box', 'ti-eye', 'ti-lock', 'ti-agenda'];
-const SOLUTION_ICONS = ['ti-wallet', 'ti-briefcase', 'ti-layers-alt', 'ti-headphone-alt'];
 
 export default function Home() {
   const { t, lang } = useI18n();
@@ -138,15 +152,15 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ RÉASSURANCE / STATS ============ */}
-      <section className="section pt-4" style={{ marginTop: -46 }}>
+      {/* ============ CHIFFRES (secondaires, avec contexte) ============ */}
+      <section className="section pt-3 pb-5">
         <div className="container">
           <StatsRow />
         </div>
       </section>
 
       {/* ============ POURQUOI BIFAUMA ============ */}
-      <section className="section" id="solutions">
+      <section className="section section-white-top" id="why">
         <div className="container">
           <div className="text-center mb-5">
             <h2 className="section-title">{t('features.title')}</h2>
@@ -169,7 +183,7 @@ export default function Home() {
       </section>
 
       {/* ============ NOS SOLUTIONS ============ */}
-      <section className="section service" style={{ background: '#fff', borderTop: '1px solid var(--bf-line)', borderBottom: '1px solid var(--bf-line)' }}>
+      <section className="section" id="solutions">
         <div className="container">
           <div className="text-center mb-5">
             <h2 className="section-title">{t('misc.services')}</h2>
@@ -191,7 +205,7 @@ export default function Home() {
       </section>
 
       {/* ============ COMMENT ÇA MARCHE ============ */}
-      <section className="section" id="how">
+      <section className="section section-white-top" id="how">
         <div className="container">
           <div className="text-center mb-5">
             <h2 className="section-title">{t('how.title')}</h2>
@@ -210,7 +224,7 @@ export default function Home() {
       </section>
 
       {/* ============ BLOC DEMANDE DE FINANCEMENT ============ */}
-      <section className="section pt-0">
+      <section className="section">
         <div className="container">
           <Reveal as="div">
             <div className="loan-cta-card">
@@ -245,12 +259,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ============ PROJETS ============ */}
-      <section className="section" style={{ borderTop: '1px solid var(--bf-line)' }}>
+      {/* ============ EXEMPLES DE PROJETS ============ */}
+      <section className="section section-white-top">
         <div className="container">
-          <div className="text-center mb-5">
+          <div className="text-center mb-4">
             <h2 className="section-title">{t('projects.title')}</h2>
             <p className="lead mx-auto" style={{ maxWidth: 640 }}>{t('projects.subtitle')}</p>
+            <p className="illustrative-note text-left text-md-center" style={{ maxWidth: 760, marginInline: 'auto' }}>
+              <i className="ti-info-alt mr-2" aria-hidden="true" />
+              {t('projects.illustrativeNote')}
+            </p>
           </div>
           <div className="row">
             {featuredProjects.map((p) => {
@@ -262,21 +280,12 @@ export default function Home() {
                     <div className="card-body d-flex flex-column p-4">
                       <div className="d-flex justify-content-between align-items-center mb-2">
                         <span className="badge badge-primary">{c(sectorLabels[p.sector])}</span>
-                        <span className="badge" style={{ background: '#EEF2F8', color: 'var(--bf-muted)' }}>
+                        <span className="badge badge-soft">
                           <i className="ti-pin mr-1" aria-hidden="true" />{c(countryLabels[p.country])}
                         </span>
                       </div>
                       <h3 className="h5 mb-2">{content.title}</h3>
                       <p className="mb-3 text-muted" style={{ fontSize: 14.5 }}>{content.intro}</p>
-                      <div className="mb-3">
-                        <div className="d-flex justify-content-between mb-1">
-                          <span className="project-meta-label">{t('projects.progress')}</span>
-                          <span className="project-meta-value">{p.progress}%</span>
-                        </div>
-                        <div className="progress">
-                          <div className="progress-bar" role="progressbar" style={{ width: `${p.progress}%` }} aria-valuenow={p.progress} aria-valuemin="0" aria-valuemax="100" />
-                        </div>
-                      </div>
                       <Link to={`/projects/${p.slug}`} className="btn btn-primary w-100 mt-auto">{t('projects.view')}</Link>
                     </div>
                   </div>
@@ -291,7 +300,7 @@ export default function Home() {
       </section>
 
       {/* ============ CONFIANCE ============ */}
-      <section className="section-lg" style={{ background: '#fff', borderTop: '1px solid var(--bf-line)' }}>
+      <section className="section-lg">
         <div className="container">
           <div className="row align-items-center justify-content-between">
             <div className="col-md-5 order-2 order-md-1 mb-4 mb-md-0">
@@ -317,7 +326,7 @@ export default function Home() {
       </section>
 
       {/* ============ PRÉSENCE EUROPÉENNE ============ */}
-      <section className="section">
+      <section className="section section-white-top">
         <div className="container">
           <h2 className="text-center section-title mb-4">{t('clients.title')}</h2>
           <CoverageStrip />
