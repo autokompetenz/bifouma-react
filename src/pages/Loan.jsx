@@ -330,7 +330,7 @@ export default function Loan() {
                         </div>
                         <div className="col-md-6">
                           <label htmlFor="loan-contact">{f.contact} *</label>
-                          <input id="loan-contact" type="text" autoComplete="email" className={inputCls('contact')} value={form.contact} onChange={set('contact')} required aria-invalid={!!errors.contact} aria-describedby={errors.contact ? 'loan-contact-error' : undefined} />
+                          <input id="loan-contact" type="email" autoComplete="email" className={inputCls('contact')} value={form.contact} onChange={set('contact')} required aria-invalid={!!errors.contact} aria-describedby={errors.contact ? 'loan-contact-error' : undefined} />
                           {errors.contact && <p className="form-error" id="loan-contact-error" role="alert">{errors.contact}</p>}
                         </div>
                         <div className="col-12">
