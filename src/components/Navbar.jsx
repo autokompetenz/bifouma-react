@@ -60,7 +60,7 @@ export default function Navbar() {
             <span className="bif-wordmark">BIFAUMA</span>
           </Link>
           <div className="d-flex align-items-center order-lg-3 ml-auto">
-            <div className="bif-header-lang d-none d-lg-block">
+            <div className="bif-header-lang">
               <LanguageSwitcher compact />
             </div>
             <button

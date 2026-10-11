@@ -3,9 +3,43 @@ import { useSearchParams } from 'react-router-dom';
 import { useI18n } from '../i18n.jsx';
 import { sendForm, describeSendError, filesTooLarge, SendError } from '../lib/sendForm.js';
 
+// --- Aide dates : le prêt se choisit par date de début / date de fin,
+//     la durée (en mois) est calculée automatiquement. ---
+const toISO = (d) => {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+};
+const addMonths = (iso, months) => {
+  const d = new Date(`${iso}T00:00:00`);
+  d.setMonth(d.getMonth() + months);
+  return toISO(d);
+};
+const monthDiff = (startISO, endISO) => {
+  if (!startISO || !endISO) return 0;
+  const s = new Date(`${startISO}T00:00:00`);
+  const e = new Date(`${endISO}T00:00:00`);
+  if (Number.isNaN(s.getTime()) || Number.isNaN(e.getTime()) || e <= s) return 0;
+  let months = (e.getFullYear() - s.getFullYear()) * 12 + (e.getMonth() - s.getMonth());
+  if (e.getDate() < s.getDate()) months -= 1;
+  return months > 0 ? months : 1;
+};
+const formatDate = (iso, lang) => {
+  if (!iso) return '';
+  const d = new Date(`${iso}T00:00:00`);
+  if (Number.isNaN(d.getTime())) return iso;
+  try {
+    return d.toLocaleDateString(lang, { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } catch {
+    return iso;
+  }
+};
+
 const emptyForm = {
   amount: '',
-  duration: '',
+  startDate: '',
+  endDate: '',
   purpose: '',
   income: '',
   situation: '',
@@ -21,13 +55,15 @@ export default function Loan() {
   const [step, setStep] = useState(1);
   // Pré-remplissage venant du simulateur de la page d'accueil (?amount=…&duration=…).
   const [form, setForm] = useState(() => {
-    const amount = params.get('amount');
-    const duration = params.get('duration');
-    return {
-      ...emptyForm,
-      amount: amount || '',
-      duration: duration ? `${duration} ${t('projects.months')}` : '',
-    };
+    const amount = params.get('amount') || '';
+    const months = parseInt(params.get('duration') || '', 10);
+    let startDate = '';
+    let endDate = '';
+    if (Number.isFinite(months) && months > 0) {
+      startDate = toISO(new Date());
+      endDate = addMonths(startDate, months);
+    }
+    return { ...emptyForm, amount, startDate, endDate };
   });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -44,13 +80,23 @@ export default function Loan() {
     if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
-  const requiredByStep = { 1: ['amount', 'duration', 'purpose'], 3: ['name', 'contact'] };
+  const requiredByStep = { 1: ['amount', 'startDate', 'endDate', 'purpose'], 3: ['name', 'contact'] };
 
   const validate = (n) => {
     const errs = {};
     (requiredByStep[n] || []).forEach((k) => {
       if (!String(form[k] || '').trim()) errs[k] = t('loan.required');
     });
+    if (
+      n === 1 &&
+      form.startDate &&
+      form.endDate &&
+      !errs.startDate &&
+      !errs.endDate &&
+      new Date(form.endDate) <= new Date(form.startDate)
+    ) {
+      errs.endDate = t('loan.dateOrder');
+    }
     setErrors(errs);
     return Object.keys(errs).length === 0;
   };
@@ -97,7 +143,9 @@ export default function Loan() {
         'loan',
         {
           amount: form.amount,
-          duration: form.duration,
+          startDate: formatDate(form.startDate, lang),
+          endDate: formatDate(form.endDate, lang),
+          duration: durationLabel,
           purpose: form.purpose,
           income: form.income,
           situation: form.situation,
@@ -122,8 +170,25 @@ export default function Loan() {
 
   const valueOrDash = (v) => (String(v).trim() ? v : '—');
 
+  const todayISO = toISO(new Date());
+  const durationMonths = monthDiff(form.startDate, form.endDate);
+  const durationLabel = durationMonths ? `${durationMonths} ${t('projects.months')}` : '';
+
+  const recapValue = (k) => {
+    if (k === 'period') {
+      return form.startDate && form.endDate
+        ? `${formatDate(form.startDate, lang)} → ${formatDate(form.endDate, lang)}`
+        : '—';
+    }
+    if (k === 'duration') return durationLabel || '—';
+    if (k === 'file') {
+      return form.files.length > 0 ? `${form.files.length} ${t('loan.filesAdded')}` : t('loan.fileNone');
+    }
+    return valueOrDash(form[k]);
+  };
+
   const groups = [
-    { step: 1, title: steps[0], rows: [['amount', f.amount], ['duration', f.duration], ['purpose', f.purpose]] },
+    { step: 1, title: steps[0], rows: [['amount', f.amount], ['period', t('loan.period')], ['duration', f.duration], ['purpose', f.purpose]] },
     { step: 2, title: steps[1], rows: [['income', f.income], ['situation', f.situation]] },
     { step: 3, title: steps[2], rows: [['name', f.name], ['contact', f.contact], ['file', f.file]] },
   ];
@@ -131,77 +196,76 @@ export default function Loan() {
   const sending = status === 'sending';
 
   return (
-    <section className="section-lg loan page-hero">
-      <div className="page-hero-head">
-        <div className="container">
-          <div className="text-center">
-            <h1 className="section-title mb-0">{t('loan.title')}</h1>
-            <p className="lead">{t('loan.subtitle')}</p>
-          </div>
+    <section className="ak-loan">
+      <header className="ak-loan__head">
+        <div className="container ak-loan__head-inner">
+          <p className="ak-loan__eyebrow">{t('misc.invest')}</p>
+          <h1 className="ak-loan__title">
+            <span className="ak-loan__title-line">{t('loan.title1')}</span>
+            <span className="ak-loan__title-line ak-loan__title-accent">{t('loan.title2')}</span>
+          </h1>
+          <p className="ak-loan__sub">{t('loan.subtitle')}</p>
         </div>
-      </div>
-      <div className="container mt-5">
+      </header>
 
+      <div className="container ak-loan__body">
         {status === 'sent' ? (
-          <div className="row justify-content-center mt-5">
-            <div className="col-lg-8 text-center">
-              <div className="rounded bg-white p-5 shadow-primary">
-                <i className="ti-check-box confirm-icon" aria-hidden="true" />
-                <h3 className="mt-3 mb-2">{t('loan.form.success')}</h3>
-                <button type="button" className="btn btn-outline-dark mt-4" onClick={reset}>
-                  {t('loan.newRequest')}
-                </button>
-              </div>
-            </div>
+          <div className="ak-loan__success">
+            <span className="ak-loan__success-icon"><i className="ti-check" aria-hidden="true" /></span>
+            <h3>{t('loan.form.success')}</h3>
+            <button type="button" className="btn btn-outline-dark mt-3" onClick={reset}>
+              {t('loan.newRequest')}
+            </button>
           </div>
         ) : (
           <>
-            <ol className="loan-steps">
+            <ol className="ak-steps">
               {steps.map((label, i) => {
                 const n = i + 1;
                 const cls = n === step ? 'active' : n < step ? 'done' : '';
                 return (
-                  <li key={label} className={`loan-step ${cls}`}>
-                    <button type="button" className="loan-step-btn" onClick={() => go(n)} disabled={sending || n > step + 1}>
-                      <span className="loan-step-num">{n < step ? <i className="ti-check" /> : n}</span>
+                  <li key={label} className={`ak-step ${cls}`}>
+                    <button type="button" className="ak-step-btn" onClick={() => go(n)} disabled={sending || n > step + 1}>
+                      <span className="ak-step-num">{n < step ? <i className="ti-check" /> : n}</span>
                     </button>
-                    <span className="loan-step-label">{label}</span>
+                    <span className="ak-step-label">{label}</span>
                   </li>
                 );
               })}
             </ol>
 
-            <div className="text-center text-muted mb-4">
+            <p className="ak-loan__progress">
               {t('loan.progress')} {step} {t('loan.of')} 4
-            </div>
+            </p>
 
-            <div className="row justify-content-center">
-              <div className="col-lg-5 order-2 order-lg-1">
-                <h4>{t('loan.terms')}</h4>
-                <ul className="service-list pl-0 mt-3">
-                  {t('loan.termsList').map((s, i) => (
-                    <li key={i}><i className="ti-check mr-2" />{s}</li>
-                  ))}
-                </ul>
-                <div className="rounded bg-white p-4 shadow-primary mt-4">
-                  <h6 className="mb-2">{f.contact}</h6>
-                  <p className="mb-0 text-muted">Telegram: +49 174 594 4264</p>
-                  <p className="mb-0 text-muted">Facebook: BIFAUMA</p>
+            <div className="ak-loan__grid">
+              <aside className="ak-loan__aside">
+                <div className="ak-panel">
+                  <p className="ak-panel__label">{t('loan.terms')}</p>
+                  <ul className="ak-checklist">
+                    {t('loan.termsList').map((s, i) => (
+                      <li key={i}><i className="ti-check" aria-hidden="true" />{s}</li>
+                    ))}
+                  </ul>
                 </div>
-              </div>
+                <div className="ak-panel">
+                  <h4 className="ak-panel__title">{f.contact}</h4>
+                  <p className="ak-panel__note">Telegram: +49 174 594 4264</p>
+                  <p className="ak-panel__note">Facebook: BIFAUMA</p>
+                </div>
+              </aside>
 
-              <div className="col-lg-7 order-1 order-lg-2 mb-4">
-                <div className="rounded bg-white p-4 shadow-primary">
+              <div className="ak-loan__main">
+                <div className="ak-panel ak-panel--form">
                   {status === 'error' && (
-                    <div className="bif-error mb-3" role="alert">
+                    <div className="ak-alert" role="alert">
                       {errorMsg}
-                      <span className="d-block text-muted mt-1">
-                        Telegram: +49 174 594 4264 · Facebook: BIFAUMA
-                      </span>
+                      <span>Telegram: +49 174 594 4264 · Facebook: BIFAUMA</span>
                     </div>
                   )}
+
                   {step === 1 && (
-                    <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
+                    <form className="ak-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
                           <label htmlFor="loan-amount">{f.amount} *</label>
@@ -209,24 +273,36 @@ export default function Loan() {
                           {errors.amount && <p className="form-error" id="loan-amount-error" role="alert">{errors.amount}</p>}
                         </div>
                         <div className="col-md-6">
-                          <label htmlFor="loan-duration">{f.duration} *</label>
-                          <input id="loan-duration" type="text" inputMode="numeric" autoComplete="off" className={inputCls('duration')} value={form.duration} onChange={set('duration')} required aria-invalid={!!errors.duration} aria-describedby={errors.duration ? 'loan-duration-error' : undefined} />
-                          {errors.duration && <p className="form-error" id="loan-duration-error" role="alert">{errors.duration}</p>}
-                        </div>
-                        <div className="col-12">
                           <label htmlFor="loan-purpose">{f.purpose} *</label>
                           <input id="loan-purpose" type="text" className={inputCls('purpose')} value={form.purpose} onChange={set('purpose')} required aria-invalid={!!errors.purpose} aria-describedby={errors.purpose ? 'loan-purpose-error' : undefined} />
                           {errors.purpose && <p className="form-error" id="loan-purpose-error" role="alert">{errors.purpose}</p>}
                         </div>
-                        <div className="col-12 text-right">
-                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
+                        <div className="col-md-6">
+                          <label htmlFor="loan-start">{f.startDate} *</label>
+                          <input id="loan-start" type="date" min={todayISO} className={inputCls('startDate')} value={form.startDate} onChange={set('startDate')} required aria-invalid={!!errors.startDate} aria-describedby={errors.startDate ? 'loan-start-error' : undefined} />
+                          {errors.startDate && <p className="form-error" id="loan-start-error" role="alert">{errors.startDate}</p>}
                         </div>
+                        <div className="col-md-6">
+                          <label htmlFor="loan-end">{f.endDate} *</label>
+                          <input id="loan-end" type="date" min={form.startDate || todayISO} className={inputCls('endDate')} value={form.endDate} onChange={set('endDate')} required aria-invalid={!!errors.endDate} aria-describedby={errors.endDate ? 'loan-end-error' : undefined} />
+                          {errors.endDate && <p className="form-error" id="loan-end-error" role="alert">{errors.endDate}</p>}
+                        </div>
+                        <div className="col-12">
+                          {durationLabel && (
+                            <p className="ak-loan__duration">
+                              {f.duration}: <strong>{durationLabel}</strong>
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="ak-actions ak-actions--end">
+                        <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" aria-hidden="true" /></button>
                       </div>
                     </form>
                   )}
 
                   {step === 2 && (
-                    <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
+                    <form className="ak-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
                           <label htmlFor="loan-income">{f.income}</label>
@@ -236,18 +312,16 @@ export default function Loan() {
                           <label htmlFor="loan-situation">{f.situation}</label>
                           <textarea id="loan-situation" className={inputCls('situation')} value={form.situation} onChange={set('situation')} />
                         </div>
-                        <div className="col-md-6 col-12">
-                          <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
-                        </div>
-                        <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
-                        </div>
+                      </div>
+                      <div className="ak-actions">
+                        <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" aria-hidden="true" /> {t('loan.back')}</button>
+                        <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" aria-hidden="true" /></button>
                       </div>
                     </form>
                   )}
 
                   {step === 3 && (
-                    <form className="bif-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
+                    <form className="ak-form" onSubmit={(e) => { e.preventDefault(); next(); }} noValidate>
                       <div className="row">
                         <div className="col-md-6">
                           <label htmlFor="loan-name">{f.name} *</label>
@@ -266,48 +340,42 @@ export default function Loan() {
                             {form.files.length > 0 ? `${form.files.length} ${t('loan.filesAdded')}` : t('loan.fileNone')}
                           </p>
                         </div>
-                        <div className="col-md-6 col-12">
-                          <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" /> {t('loan.back')}</button>
-                        </div>
-                        <div className="col-md-6 col-12 text-left text-md-right mt-1">
-                          <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" /></button>
-                        </div>
+                      </div>
+                      <div className="ak-actions">
+                        <button type="button" className="btn btn-outline-dark" onClick={back}><i className="ti-arrow-left" aria-hidden="true" /> {t('loan.back')}</button>
+                        <button type="submit" className="btn btn-primary">{t('loan.next')} <i className="ti-arrow-right" aria-hidden="true" /></button>
                       </div>
                     </form>
                   )}
 
                   {step === 4 && (
-                    <form className="bif-form" onSubmit={submit} noValidate>
-                      <h5 className="mb-1">{t('loan.recapTitle')}</h5>
+                    <form className="ak-form" onSubmit={submit} noValidate>
+                      <h3 className="mb-1">{t('loan.recapTitle')}</h3>
                       <p className="text-muted mb-4">{t('loan.recapHint')}</p>
                       {groups.map((g) => (
-                        <div className="recap-group" key={g.step}>
-                          <div className="d-flex justify-content-between align-items-center mb-1">
-                            <h6 className="mb-0">{g.title}</h6>
-                            <button type="button" className="recap-edit" onClick={() => go(g.step)} disabled={sending}><i className="ti-pencil mr-1" />{t('loan.edit')}</button>
+                        <div className="ak-recap" key={g.step}>
+                          <div className="ak-recap__head">
+                            <h4 className="ak-recap__title">{g.title}</h4>
+                            <button type="button" className="ak-recap__edit" onClick={() => go(g.step)} disabled={sending}><i className="ti-pencil mr-1" aria-hidden="true" />{t('loan.edit')}</button>
                           </div>
-                          <ul className="recap-list">
+                          <ul className="ak-recap__list">
                             {g.rows.map(([k, label]) => (
                               <li key={k}>
-                                <span className="recap-k">{label}</span>
-                                <span className="recap-v">
-                                  {k === 'file'
-                                    ? form.files.length > 0 ? `${form.files.length} ${t('loan.filesAdded')}` : t('loan.fileNone')
-                                    : valueOrDash(form[k])}
-                                </span>
+                                <span className="ak-recap__k">{label}</span>
+                                <span className="ak-recap__v">{recapValue(k)}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                       ))}
-                      <label className="d-flex align-items-start" htmlFor="loan-consent">
-                        <input id="loan-consent" type="checkbox" className="mr-2" required checked={form.consent} onChange={set('consent')} disabled={sending} />
+                      <label className="ak-consent" htmlFor="loan-consent">
+                        <input id="loan-consent" type="checkbox" required checked={form.consent} onChange={set('consent')} disabled={sending} />
                         {f.consent}
                       </label>
-                      <div className="d-flex justify-content-between mt-3">
-                        <button type="button" className="btn btn-outline-dark" onClick={back} disabled={sending}><i className="ti-arrow-left" /> {t('loan.back')}</button>
+                      <div className="ak-actions">
+                        <button type="button" className="btn btn-outline-dark" onClick={back} disabled={sending}><i className="ti-arrow-left" aria-hidden="true" /> {t('loan.back')}</button>
                         <button type="submit" className="btn btn-primary btn-lg" disabled={!form.consent || sending}>
-                          {sending ? <><i className="ti-reload mr-2" />{t('forms.sending')}</> : <><i className="ti-check mr-2" />{t('loan.confirm')}</>}
+                          {sending ? <><i className="ti-reload mr-2" aria-hidden="true" />{t('forms.sending')}</> : <><i className="ti-check mr-2" aria-hidden="true" />{t('loan.confirm')}</>}
                         </button>
                       </div>
                     </form>

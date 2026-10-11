@@ -5,6 +5,7 @@ import App from './App.jsx';
 import { I18nProvider } from './i18n.jsx';
 import './styles/overrides.css';
 import './styles/theme.css';
+import './styles/loan-automatik.css';
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>

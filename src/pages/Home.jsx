@@ -124,7 +124,7 @@ export default function Home() {
           <div className="y-hero__grid">
             <div className="y-hero__copy">
               <span className="y-eyebrow">
-                <i className="ti-shield" aria-hidden="true" /> {t('misc.invest')}
+                {t('misc.invest')}
               </span>
               <h1 className="y-hero__title">
                 {t('hero.title1')}{' '}

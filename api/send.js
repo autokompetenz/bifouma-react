@@ -36,6 +36,8 @@ const FIELD_LABELS = {
   message: 'Message',
   amount: 'Montant (€)',
   duration: 'Durée',
+  startDate: 'Date de début',
+  endDate: 'Date de fin',
   purpose: 'Objet du financement',
   income: 'Revenu mensuel (€)',
   situation: 'Situation financière',
@@ -47,7 +49,7 @@ const FIELD_LABELS = {
 
 // Ordre d'affichage privilégié, le reste est ajouté à la suite.
 const FIELD_ORDER = [
-  'name', 'email', 'contact', 'subject', 'amount', 'duration', 'purpose',
+  'name', 'email', 'contact', 'subject', 'amount', 'duration', 'startDate', 'endDate', 'purpose',
   'income', 'situation', 'country', 'sector', 'description', 'message', 'consent',
 ];
 
@@ -82,6 +84,7 @@ const CONFIRM_LOCALES = {
     fields: {
       name: 'Nom', email: 'E-mail', contact: 'Contact', subject: 'Objet',
       message: 'Message', amount: 'Montant (€)', duration: 'Durée',
+      startDate: 'Date de début', endDate: 'Date de fin',
       purpose: 'Objet du financement', income: 'Revenu mensuel (€)',
       situation: 'Situation financière', country: 'Pays', sector: 'Secteur',
       description: 'Description', consent: 'Consentement',
@@ -113,6 +116,7 @@ const CONFIRM_LOCALES = {
     fields: {
       name: 'Name', email: 'E-Mail', contact: 'Kontakt', subject: 'Betreff',
       message: 'Nachricht', amount: 'Betrag (€)', duration: 'Laufzeit',
+      startDate: 'Startdatum', endDate: 'Enddatum',
       purpose: 'Verwendungszweck', income: 'Monatliches Einkommen (€)',
       situation: 'Finanzielle Situation', country: 'Land', sector: 'Branche',
       description: 'Beschreibung', consent: 'Einwilligung',
@@ -144,6 +148,7 @@ const CONFIRM_LOCALES = {
     fields: {
       name: 'Nimi', email: 'Sähköposti', contact: 'Yhteystieto', subject: 'Aihe',
       message: 'Viesti', amount: 'Summa (€)', duration: 'Kesto',
+      startDate: 'Aloituspäivä', endDate: 'Päättymispäivä',
       purpose: 'Käyttötarkoitus', income: 'Kuukausitulot (€)',
       situation: 'Taloudellinen tilanne', country: 'Maa', sector: 'Toimiala',
       description: 'Kuvaus', consent: 'Suostumus',
@@ -175,6 +180,7 @@ const CONFIRM_LOCALES = {
     fields: {
       name: 'Име', email: 'Е-пошта', contact: 'Контакт', subject: 'Тема',
       message: 'Порука', amount: 'Износ (€)', duration: 'Трајање',
+      startDate: 'Датум почетка', endDate: 'Датум завршетка',
       purpose: 'Намена', income: 'Месечни приход (€)',
       situation: 'Финансијска ситуација', country: 'Земља', sector: 'Сектор',
       description: 'Опис', consent: 'Сагласност',

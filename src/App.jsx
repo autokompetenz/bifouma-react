@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import MobileNav from './components/MobileNav.jsx';
 import PageTransition from './components/PageTransition.jsx';
 import { useI18n } from './i18n.jsx';
 import { projects } from './data/projects.js';
@@ -68,6 +69,7 @@ export default function App() {
         </Routes>
       </PageTransition>
       <Footer />
+      <MobileNav />
     </>
   );
 }
