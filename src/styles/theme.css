@@ -1,7 +1,7 @@
 /* ====================================================================
-   BIFAUMA — Thème AUTOMATIK (automatiK-app)
-   Navy #132853, fond #F5F5F7, cartes blanches, blocs imbriqués #F0F0F2,
-   libellés/boutons MAJUSCULES espacés, rayons 8/12 px, ombres douces.
+   BIFAUMA — Thème « Institutional Trust Fintech »
+   Bleu #0072CE, navy #071D49, cyan #00B4D8, fond #FAF8FF, blocs #F5F9FF,
+   cartes blanches, bordures #E2E8F0, rayons 8/16/24 px, ombres bleutées.
    Chargé APRÈS overrides.css.
    ==================================================================== */
 
@@ -12,10 +12,10 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
 .section-lg { padding-top: 112px; padding-bottom: 112px; }
 .container { max-width: 1200px; }
 
-/* Boutons : coins 8 px (niveau 2 du design system), pas de « pilule » */
-.btn { border-radius: var(--radius-sm); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
-.btn-lg { min-height: 56px; padding: 18px 44px; }
-.btn-primary { box-shadow: 0 4px 14px rgba(19, 40, 83, 0.22); }
+/* Boutons : coins 8 px, Inter bold en casse normale (design system fintech) */
+.btn { border-radius: var(--radius-sm); font-weight: 700; letter-spacing: 0.01em; text-transform: none; }
+.btn-lg { min-height: 56px; padding: 16px 32px; font-size: 15px; }
+.btn-primary { box-shadow: 0 6px 16px -2px rgba(0, 114, 206, 0.35); }
 
 /* ---------- Navigation ---------- */
 .y-nav {
@@ -26,7 +26,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
 }
 .y-nav--solid {
   background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 8px 30px rgba(19, 40, 83, 0.07);
+  box-shadow: 0 8px 30px rgba(7, 29, 73, 0.07);
 }
 .y-nav .bif-wordmark { color: var(--bf-navy); font-size: 24px; }
 .y-nav .nav-link { color: var(--bf-navy); font-weight: 550; }
@@ -46,8 +46,8 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   inset: 0;
   pointer-events: none;
   background:
-    radial-gradient(880px 420px at 82% -14%, rgba(19, 40, 83, 0.12), transparent 60%),
-    radial-gradient(640px 340px at -6% 112%, rgba(30, 58, 110, 0.10), transparent 62%);
+    radial-gradient(880px 420px at 82% -14%, rgba(7, 29, 73, 0.12), transparent 60%),
+    radial-gradient(640px 340px at -6% 112%, rgba(0, 114, 206, 0.10), transparent 62%);
 }
 .y-hero > .container { position: relative; z-index: 1; }
 .y-hero__grid {
@@ -185,7 +185,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   border-radius: 50%;
   background: var(--bf-blue);
   border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(19, 40, 83, 0.35);
+  box-shadow: 0 2px 8px rgba(7, 29, 73, 0.35);
   cursor: pointer;
   margin-top: -2px;
 }
@@ -195,7 +195,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   border-radius: 50%;
   background: var(--bf-blue);
   border: 3px solid #fff;
-  box-shadow: 0 2px 8px rgba(19, 40, 83, 0.35);
+  box-shadow: 0 2px 8px rgba(7, 29, 73, 0.35);
   cursor: pointer;
 }
 
@@ -272,7 +272,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
 .y-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow-md);
-  border-color: rgba(19, 40, 83, 0.25);
+  border-color: rgba(7, 29, 73, 0.25);
 }
 .y-card__icon {
   width: 48px;
@@ -283,7 +283,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   border-radius: var(--radius-md);
   font-size: 22px;
   margin-bottom: 22px;
-  background: rgba(19, 40, 83, 0.08);
+  background: var(--bf-blue-soft);
   color: var(--bf-blue);
 }
 .y-card__icon--teal { background: var(--bf-teal-soft); color: var(--bf-teal); }
@@ -342,8 +342,8 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
   gap: 40px;
   align-items: center;
-  background: #132853;
-  box-shadow: 0 12px 28px -6px rgba(19, 40, 83, 0.3);
+  background: #071D49;
+  box-shadow: 0 12px 28px -6px rgba(7, 29, 73, 0.3);
 }
 .y-cta__tag {
   display: inline-block;
@@ -362,7 +362,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   gap: 18px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 22px;
+  border-radius: var(--radius-lg);
   padding: 26px 22px;
 }
 .y-cta__fact { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
@@ -407,7 +407,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
 .y-newsletter .newsletter-form:focus {
   border-color: var(--bf-blue);
   outline: none;
-  box-shadow: 0 0 0 0.16rem rgba(19, 40, 83, 0.16);
+  box-shadow: 0 0 0 0.16rem rgba(7, 29, 73, 0.16);
 }
 
 /* ---------- Cartes projet (accueil) ---------- */
@@ -499,7 +499,7 @@ h1, h2, h3, h4, .h1, .h2, .h3 { font-weight: 850; letter-spacing: -0.025em; }
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-top: 1px solid var(--bf-line);
-  box-shadow: 0 -4px 16px rgba(19, 40, 83, 0.06);
+  box-shadow: 0 -4px 16px rgba(7, 29, 73, 0.06);
   padding-bottom: env(safe-area-inset-bottom, 0);
 }
 .mobile-nav__item {

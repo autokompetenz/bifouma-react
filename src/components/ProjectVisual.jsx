@@ -4,23 +4,23 @@ import { useI18n } from '../i18n.jsx';
 const SECTOR_THEME = {
   energy: {
     icon: 'ti-bolt',
-    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-800) 55%, #0E5AA8 130%)',
+    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-800) 55%, var(--bf-blue) 130%)',
     accent: 'var(--bf-teal)',
   },
   realestate: {
     icon: 'ti-home',
-    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-700) 55%, #1070C4 130%)',
-    accent: '#7FC4F5',
+    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-700) 55%, #4CD6FB 130%)',
+    accent: '#4CD6FB',
   },
   agro: {
     icon: 'ti-package',
-    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, #0C2A4A 55%, #0E6E63 130%)',
+    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-800) 55%, var(--bf-teal) 130%)',
     accent: 'var(--bf-teal)',
   },
   retail: {
     icon: 'ti-shopping-cart',
-    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-800) 55%, #2C5AA8 130%)',
-    accent: '#9DB8F0',
+    gradient: 'linear-gradient(135deg, var(--bf-navy) 0%, var(--bf-navy-700) 55%, #A5C8FF 130%)',
+    accent: '#A5C8FF',
   },
 };
 

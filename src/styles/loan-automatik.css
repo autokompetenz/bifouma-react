@@ -1,6 +1,5 @@
 /* ====================================================================
-   PAGE « DEMANDE DE PRÊT » — refonte AUTOMATIK (automatiK-app)
-   D'après automatiK-app/src/pages/Simulation.jsx + src/index.css
+   PAGE « DEMANDE DE PRÊT » — refonte « Institutional Trust Fintech »
    Tout est scopé sous .ak-loan (aucun impact sur le reste du site).
    ==================================================================== */
 
@@ -22,7 +21,7 @@
   bottom: 0;
   width: 42%;
   pointer-events: none;
-  background: radial-gradient(ellipse at right, rgba(19, 40, 83, 0.08), transparent 70%);
+  background: radial-gradient(ellipse at right, rgba(0, 114, 206, 0.08), transparent 70%);
 }
 .ak-loan__head-inner { position: relative; z-index: 1; }
 .ak-loan__eyebrow {
@@ -117,7 +116,7 @@
   background: var(--bf-navy);
   border-color: var(--bf-navy);
   color: #fff;
-  box-shadow: 0 4px 20px rgba(19, 40, 83, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 114, 206, 0.30);
 }
 .ak-step.done .ak-step-num { border-color: var(--bf-navy); color: var(--bf-navy); }
 .ak-step-label {

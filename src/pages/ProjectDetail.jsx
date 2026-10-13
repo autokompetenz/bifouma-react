@@ -24,7 +24,7 @@ export default function ProjectDetail() {
             <span className="badge" style={{ background: 'rgba(255,255,255,0.16)', color: 'rgba(255,255,255,0.92)' }}>
               <i className="ti-pin mr-1" />{c(countryLabels[p.country])}
             </span>
-            <span className="badge" style={{ background: 'rgba(22,184,166,0.9)', color: '#FFFFFF' }}>
+            <span className="badge" style={{ background: 'rgba(0,180,216,0.9)', color: '#FFFFFF' }}>
               <i className="ti-info-alt mr-1" />{t('projects.illustrativeNote')}
             </span>
           </div>
