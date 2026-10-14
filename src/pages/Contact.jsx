@@ -12,8 +12,8 @@ export default function Contact() {
   const cards = t('contact.infoCards');
   const f = t('contact.form');
 
-  const telegram = { url: 'https://t.me/491745944264', label: '+49 174 594 4264' };
-  const facebook = 'https://www.facebook.com/profile.php?id=61594025471011';
+  const telegram = { url: 'https://t.me/BIFAUMA', label: '+49 174 594 4264' };
+  const facebook = 'https://www.facebook.com/profile.php?id=61595091127325';
 
   const nameId = 'ct-name';
   const emailId = 'ct-email';

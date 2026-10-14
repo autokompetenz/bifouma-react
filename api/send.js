@@ -188,9 +188,9 @@ const CONFIRM_LOCALES = {
   },
 };
 
-const TELEGRAM_URL = 'https://t.me/491745944264';
+const TELEGRAM_URL = 'https://t.me/BIFAUMA';
 const TELEGRAM_LABEL = '+49 174 594 4264';
-const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61594025471011';
+const FACEBOOK_URL = 'https://www.facebook.com/profile.php?id=61595091127325';
 
 function text(value) {
   return String(value == null ? '' : value)

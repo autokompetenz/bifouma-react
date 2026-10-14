@@ -2,8 +2,8 @@ import { useI18n } from '../i18n.jsx';
 
 export default function LegalPage({ type }) {
   const { t } = useI18n();
-  const telegram = 'https://t.me/491745944264';
-  const facebook = 'https://www.facebook.com/profile.php?id=61594025471011';
+  const telegram = 'https://t.me/BIFAUMA';
+  const facebook = 'https://www.facebook.com/profile.php?id=61595091127325';
 
   if (type === 'faq') {
     const faq = t('legal.faq');

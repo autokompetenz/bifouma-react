@@ -323,7 +323,7 @@ const translations = {
         contactTitle: 'Kontakt',
         contact: [
           'Telegram: +49 174 594 4264',
-          'Facebook: facebook.com/profile.php?id=61594025471011',
+          'Facebook: facebook.com/profile.php?id=61595091127325',
           'Anfragen beantworten wir in der Regel innerhalb von 24 Stunden.',
         ],
         liabilityTitle: 'Haftungsausschluss',
@@ -672,7 +672,7 @@ const translations = {
         contactTitle: 'Yhteystiedot',
         contact: [
           'Telegram: +49 174 594 4264',
-          'Facebook: facebook.com/profile.php?id=61594025471011',
+          'Facebook: facebook.com/profile.php?id=61595091127325',
           'Vastaamme pyyntöihin yleensä 24 tunnin kuluessa.',
         ],
         liabilityTitle: 'Vastuuvapauslauseke',
@@ -1021,7 +1021,7 @@ const translations = {
         contactTitle: 'Контакт',
         contact: [
           'Телеграм: +49 174 594 4264',
-          'Фејсбук: facebook.com/profile.php?id=61594025471011',
+          'Фејсбук: facebook.com/profile.php?id=61595091127325',
           'На захтеве одговарамо обично у року од 24 сата.',
         ],
         liabilityTitle: 'Одрицање одговорности',
@@ -1370,7 +1370,7 @@ const translations = {
         contactTitle: 'Contact',
         contact: [
           'Telegram : +49 174 594 4264',
-          'Facebook : facebook.com/profile.php?id=61594025471011',
+          'Facebook : facebook.com/profile.php?id=61595091127325',
           'Nous répondons aux demandes en général sous 24 heures.',
         ],
         liabilityTitle: 'Avertissement',
